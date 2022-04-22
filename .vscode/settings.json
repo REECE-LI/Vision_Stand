@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "main.h": "c",
+        "config.h": "c",
+        "testapp.h": "c"
+    }
+}

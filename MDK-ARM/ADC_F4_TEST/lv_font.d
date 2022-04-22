@@ -1,0 +1,15 @@
+adc_f4_test\lv_font.o: ..\User\LVGL\lvgl\src\lv_font\lv_font.c
+adc_f4_test\lv_font.o: ..\User\LVGL\lvgl\src\lv_font\lv_font.h
+adc_f4_test\lv_font.o: ..\User\LVGL\lvgl\src\lv_font\../lv_conf_internal.h
+adc_f4_test\lv_font.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+adc_f4_test\lv_font.o: ..\User\LVGL\lvgl\src\lv_font\../lv_conf_kconfig.h
+adc_f4_test\lv_font.o: ..\User\LVGL\lvgl\src\lv_font\../../../lv_conf.h
+adc_f4_test\lv_font.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+adc_f4_test\lv_font.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+adc_f4_test\lv_font.o: ..\User\LVGL\lvgl\src\lv_font\lv_symbol_def.h
+adc_f4_test\lv_font.o: ..\User\LVGL\lvgl\src\lv_font\../lv_misc/lv_area.h
+adc_f4_test\lv_font.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+adc_f4_test\lv_font.o: ..\User\LVGL\lvgl\src\lv_font\../lv_misc/lv_mem.h
+adc_f4_test\lv_font.o: ..\User\LVGL\lvgl\src\lv_font\../lv_misc/lv_log.h
+adc_f4_test\lv_font.o: ..\User\LVGL\lvgl\src\lv_font\../lv_misc/lv_types.h
+adc_f4_test\lv_font.o: ..\User\LVGL\lvgl\src\lv_font\../lv_misc/lv_utils.h
