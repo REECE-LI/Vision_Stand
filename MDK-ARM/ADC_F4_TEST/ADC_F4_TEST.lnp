@@ -149,6 +149,7 @@
 "adc_f4_test\lv_port_indev.o"
 "adc_f4_test\testapp.o"
 "adc_f4_test\startup.o"
+"adc_f4_test\pagecontrol.o"
 "adc_f4_test\imgcontrol.o"
 "adc_f4_test\pagemain.o"
 "adc_f4_test\imgremember.o"

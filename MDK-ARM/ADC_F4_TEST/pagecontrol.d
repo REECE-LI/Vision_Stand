@@ -10,6 +10,7 @@ adc_f4_test\pagecontrol.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 adc_f4_test\pagecontrol.o: ..\User\LVGL\lvgl\src/lv_misc/lv_mem.h
 adc_f4_test\pagecontrol.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 adc_f4_test\pagecontrol.o: ..\User\LVGL\lvgl\src/lv_misc/lv_types.h
+adc_f4_test\pagecontrol.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 adc_f4_test\pagecontrol.o: ..\User\LVGL\lvgl\src/lv_misc/lv_ll.h
 adc_f4_test\pagecontrol.o: ..\User\LVGL\lvgl\src/lv_misc/lv_math.h
 adc_f4_test\pagecontrol.o: ..\User\LVGL\lvgl\src/lv_misc/lv_async.h
@@ -18,7 +19,6 @@ adc_f4_test\pagecontrol.o: ..\User\LVGL\lvgl\src/lv_hal/lv_hal_disp.h
 adc_f4_test\pagecontrol.o: ..\User\LVGL\lvgl\src/lv_hal/lv_hal.h
 adc_f4_test\pagecontrol.o: ..\User\LVGL\lvgl\src/lv_hal/../lv_misc/lv_color.h
 adc_f4_test\pagecontrol.o: ..\User\LVGL\lvgl\src/lv_hal/../lv_misc/lv_area.h
-adc_f4_test\pagecontrol.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 adc_f4_test\pagecontrol.o: ..\User\LVGL\lvgl\src/lv_hal/lv_hal_indev.h
 adc_f4_test\pagecontrol.o: ..\User\LVGL\lvgl\src/lv_hal/lv_hal_tick.h
 adc_f4_test\pagecontrol.o: ..\User\LVGL\lvgl\src/lv_core/lv_obj.h

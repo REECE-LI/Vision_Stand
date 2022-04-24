@@ -8,6 +8,7 @@
 #include "Page.h"
 #include "pageMain.h"
 #include "testApp.h"
+#include "Page.h"
 
 lv_obj_t *barStart;
 lv_obj_t *Logo;
@@ -35,7 +36,7 @@ void startUp(void)
     lv_anim_set_var(&logoShow, Logo);
     lv_anim_set_time(&logoShow, 600);
     lv_anim_set_values(&logoShow, 100, 90);
-    lv_anim_set_ready_cb(&logoShow, (lv_anim_ready_cb_t)creatPageMain);
+    lv_anim_set_ready_cb(&logoShow, (lv_anim_ready_cb_t)pageControl);
     //creatPageMain
     //app_test
    

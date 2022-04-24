@@ -2,6 +2,7 @@
     "files.associations": {
         "main.h": "c",
         "config.h": "c",
-        "testapp.h": "c"
+        "testapp.h": "c",
+        "pagemain.h": "c"
     }
 }

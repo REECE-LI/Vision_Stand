@@ -95,3 +95,4 @@ adc_f4_test\startup.o: ..\User\LVGL\lvgl\src/../lvgl.h
 adc_f4_test\startup.o: ..\User\LVGL\lvgl_app\Page.h
 adc_f4_test\startup.o: ..\User\LVGL\lvgl_app\pageMain.h
 adc_f4_test\startup.o: ..\User\LVGL\lvgl_app\testApp.h
+adc_f4_test\startup.o: ..\User\LVGL\lvgl_app\Page.h

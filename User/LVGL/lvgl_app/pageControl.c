@@ -68,6 +68,7 @@ void creatImg(void)
 
     imgLogo = lv_img_create(lv_scr_act(), NULL);
     lv_img_set_src(imgLogo, &imgControl);
+    lv_img_set_zoom(imgLogo, 50);   
     lv_obj_align(imgLogo, labelTitle, LV_ALIGN_OUT_TOP_MID, 0, -10);
     // lv_obj_set_style_local_opa_scale(imgLogo, LV_OBJ_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_TRANSP);
 }
