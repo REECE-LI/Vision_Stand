@@ -3,6 +3,7 @@
         "main.h": "c",
         "config.h": "c",
         "testapp.h": "c",
-        "pagemain.h": "c"
+        "pagemain.h": "c",
+        "page.h": "c"
     }
 }
