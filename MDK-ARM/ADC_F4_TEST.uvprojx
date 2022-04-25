@@ -1723,6 +1723,16 @@
               <FileType>1</FileType>
               <FilePath>..\User\LVGL\lvgl_app\imgRoll.c</FilePath>
             </File>
+            <File>
+              <FileName>Page.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\LVGL\lvgl_app\Page.c</FilePath>
+            </File>
+            <File>
+              <FileName>pageRemember.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\LVGL\lvgl_app\pageRemember.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

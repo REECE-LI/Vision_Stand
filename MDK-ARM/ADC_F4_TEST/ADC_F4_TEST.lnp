@@ -155,6 +155,8 @@
 "adc_f4_test\imgremember.o"
 "adc_f4_test\imgabout.o"
 "adc_f4_test\imgroll.o"
+"adc_f4_test\page.o"
+"adc_f4_test\pageremember.o"
 --strict --scatter "ADC_F4_TEST\ADC_F4_TEST.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

@@ -9,17 +9,22 @@
 
 #include "lvgl.h"
 
-/*此页面窗口*/
-
+// 页面窗口
 lv_obj_t *appWindow;
 
-/*标题栏*/
+// 菜单页面的名称
 lv_obj_t *labelTitle;
 
+// 菜单页面的logo
 lv_obj_t *imgLogo;
 
+// 菜单页面的控制组
+lv_group_t *appGroup;
+
 void pageControl(void);
+void pageRemember(void);
 void creatTitle(const char *text);
-void creatImg(void);
+void creatImg(const void * src_img);
+void event_callback(void);
 
 #endif

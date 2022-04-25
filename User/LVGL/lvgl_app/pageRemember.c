@@ -1,11 +1,12 @@
 /*
- * @Description:
- * @Version:
+ * @Description:存储菜单界面 
+ * @Version: 1.0
  * @Author: 李明骏
- * @Date: 2022-04-19 21:05:01
+ * @Date: 2022-04-25 10:34:06
  */
-#include "lvgl.h"
 
+#include "lvgl.h"
+//#include "Page.h"
 
 extern lv_obj_t *appWindow;
 extern void creatTitle(const char *text);
@@ -21,24 +22,24 @@ extern lv_obj_t *imgLogo;
 extern lv_group_t *appGroup;
 
 /**
- * @Name: pageControl
+ * @Name: pageRemember
  * @Description: 这个函数只会进入一次 之后的app页面处理函数另外写
  * @Author: 李明骏
- * @Return:
+ * @Return: 
  * @Date: 2022-04-25 10:30:47
  */
-void pageControl(void)
+void pageRemember(void)
 {
 
-    LV_IMG_DECLARE(imgControl);
+    LV_IMG_DECLARE(imgRemember);
 #if 1
     lv_obj_clean(appWindow);
 #else
     lv_obj_del(barStart);
     lv_obj_del(Logo);
-#endif
-    creatTitle("CONTROL");
-    creatImg(&imgControl);
+#endif 
+    creatTitle("REMEMBER");
+    creatImg(&imgRemember);
     // lv_group_add_obj(appGroup, labelTitle);
     lv_obj_set_event_cb(labelTitle, event_callback);
 }
