@@ -27,14 +27,16 @@ Project File Date:  04/25/2022
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'ADC_F4_TEST'
-compiling pageRemember.c...
-..\User\LVGL\lvgl_app\pageRemember.c(44): warning:  #167-D: argument of type "void (*)(void)" is incompatible with parameter of type "lv_event_cb_t"
-      lv_obj_set_event_cb(labelTitle, event_callback);
-..\User\LVGL\lvgl_app\pageRemember.c: 1 warning, 0 errors
+compiling Page.c...
+..\User\LVGL\lvgl_app\Page.c(145): warning:  #1-D: last line of file ends without a newline
+  }
+..\User\LVGL\lvgl_app\Page.c(11): warning:  #177-D: function "event_callback"  was declared but never referenced
+  static void event_callback(lv_obj_t *obj, lv_event_t event);
+..\User\LVGL\lvgl_app\Page.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=134670 RO-data=105274 RW-data=352 ZI-data=93480  
+Program Size: Code=135870 RO-data=339314 RW-data=420 ZI-data=93484  
 FromELF: creating hex file...
-"ADC_F4_TEST\ADC_F4_TEST.axf" - 0 Error(s), 1 Warning(s).
+"ADC_F4_TEST\ADC_F4_TEST.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -58,7 +60,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.5.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:05
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>

@@ -5,19 +5,20 @@
  * @Date: 2022-04-18 15:09:30
  */
 #include "startUp.h"
-//#include "Page.h"
+#include "Page.h"
 //#include "pageMain.h"
 //#include "testApp.h"
 
 lv_obj_t *barStart;
 lv_obj_t *Logo;
 
-extern lv_obj_t *appWindow;
-extern void pageControl(void);
-extern void pageRemember(void);
-extern lv_group_t *appGroup;
+// extern lv_obj_t *appWindow;
+// extern void pageControl(void);
+// // extern void pageRemember(void);
+// extern lv_group_t *appGroup;
 extern lv_indev_t * indev_keypad;
 
+// extern PageApp pagesApp[];
 /**
  * @Name: startUp
  * @Description: 开机界面，初始化菜单面所有元素
@@ -28,19 +29,18 @@ extern lv_indev_t * indev_keypad;
 void startUp(void)
 {
 
-    // LV_IMG_DECLARE(imgControl);
-    // LV_IMG_DECLARE(imgRemember);
-    // LV_IMG_DECLARE(imgRoll);
-    // LV_IMG_DECLARE(imgAbout);
 
     lv_anim_t logoShow;
     lv_anim_init(&logoShow);
-
+	
+	
+// 上面画面启动时，需要加载的东西
     appWindow = lv_scr_act();
     // appWindow = lv_obj_create(NULL, NULL);
     appGroup = lv_group_create(); 
     lv_indev_set_group(indev_keypad, appGroup); 
-    lv_group_set_editing(appGroup, false);
+
+    
 
     barStart = lv_bar_create(appWindow, NULL);
     Logo = lv_label_create(appWindow, NULL);
@@ -57,7 +57,7 @@ void startUp(void)
     lv_anim_set_var(&logoShow, Logo);
     lv_anim_set_time(&logoShow, 600);
     lv_anim_set_values(&logoShow, 100, 90);
-    lv_anim_set_ready_cb(&logoShow, (lv_anim_ready_cb_t)pageRemember);
+    lv_anim_set_ready_cb(&logoShow, (lv_anim_ready_cb_t)pageControl);
 
     lv_obj_set_style_local_bg_color(barStart, LV_BAR_PART_INDIC, LV_STATE_DEFAULT, LV_COLOR_RED);
 
@@ -67,4 +67,13 @@ void startUp(void)
     lv_bar_set_anim_time(barStart, 500);
     lv_bar_set_value(barStart, 100, LV_ANIM_ON);
     lv_anim_start(&logoShow);
+
+
+    // u8 i;
+    // for (i = 1; i < 5; i++)
+    // {
+    //     lv_obj_t * img = lv_img_create(appWindow, NULL);
+    //     pagesApp[i].img = img;
+    // }
+
 }

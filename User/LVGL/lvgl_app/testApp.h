@@ -1,6 +1,6 @@
 /*
  * @Description: 测试使用
- * @Version: 
+ * @Version:
  * @Author: 李明骏
  * @Date: 2022-04-16 10:44:02
  */
@@ -9,13 +9,9 @@
 
 #include "lvgl.h"
 
+extern lv_indev_t *indev_keypad;
 
-extern lv_indev_t * indev_keypad;
-
-static void event_callback(lv_obj_t * obj, lv_event_t event);
+static void event_callback(lv_obj_t *obj, lv_event_t event);
 void app_test(void);
 
-
-
 #endif
-

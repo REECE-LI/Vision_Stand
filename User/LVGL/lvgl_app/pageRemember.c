@@ -6,6 +6,8 @@
  */
 
 #include "lvgl.h"
+#include "main.h"
+#include "config.h"
 //#include "Page.h"
 
 extern lv_obj_t *appWindow;
@@ -43,3 +45,27 @@ void pageRemember(void)
     // lv_group_add_obj(appGroup, labelTitle);
     lv_obj_set_event_cb(labelTitle, event_callback);
 }
+
+// /**
+//  * @Name: rememberSwitch
+//  * @Description: 页面出现
+//  *                0 从左往右 (左边页面向右边页面滑动，右边的页面向左，X生成位置增加)
+//  *                  1 从右往左
+//  * @Author: 李明骏
+//  * @Return: 
+//  * @Date: 2022-04-25 15:29:38
+//  * @param {u8} dir
+//  */
+// void rememberSwitch(u8 dir)
+// {
+//     if (dir == 0)
+//     {
+//         creatTitle("REMEMBER", offSetX_defult_T+offSetX_offset,offSetY_defult_T);
+//         creatImg(&imgRemember, offSetX_defult_I+offSetX_offset,offSetY_defult_I);
+//     }
+//     else 
+//     {
+//         creatTitle("REMEMBER", offSetX_defult_T-offSetX_offset,offSetY_defult_T);
+//         creatImg(&imgRemember, offSetX_defult_I-offSetX_offset,offSetY_defult_I);
+//     }
+// }
