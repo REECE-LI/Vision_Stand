@@ -84,7 +84,7 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             // printf("LV_KEY_DOWN");
             // HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
             break;
-        case LV_KEY_RIGHT:
+        case LV_KEY_LEFT:
             /* code */
             // lv_group_focus_next(appGroup);
             if (ID == 4)
@@ -104,7 +104,7 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             lv_obj_set_event_cb(imgLogo, event_callback);
             lv_group_set_editing(appGroup, false);
             break;
-        case LV_KEY_LEFT:
+        case  LV_KEY_RIGHT:
             /* code */
             // lv_group_focus_prev(appGroup);
             if (ID == 1)
