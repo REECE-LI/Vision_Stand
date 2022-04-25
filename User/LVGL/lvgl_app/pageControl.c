@@ -56,11 +56,13 @@ void pageControl(void)
     // lv_group_add_obj(appGroup, labelTitle);
 
     // pageSwitch(5,4);
-    lv_group_add_obj(appGroup, imgLogo);
-    lv_group_add_obj(appGroup, labelTitle);
-    lv_obj_set_event_cb(labelTitle, event_callback);
-    lv_obj_set_event_cb(imgLogo, event_callback);
-    lv_group_set_editing(appGroup, false);
+    pageImgAnimInit();
+    pageTitleAnimInit();
+    // lv_group_add_obj(appGroup, imgLogo);
+    // lv_group_add_obj(appGroup, labelTitle);
+    // lv_obj_set_event_cb(labelTitle, event_callback);
+    // lv_obj_set_event_cb(imgLogo, event_callback);
+    // lv_group_set_editing(appGroup, false);
     // HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
     // lv_obj_clean(appWindow);
 }
@@ -98,13 +100,8 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
                 pageSwitch(ID - 1, ID);
             }
 
-            lv_group_add_obj(appGroup, imgLogo);
-            lv_group_add_obj(appGroup, labelTitle);
-            lv_obj_set_event_cb(labelTitle, event_callback);
-            lv_obj_set_event_cb(imgLogo, event_callback);
-            lv_group_set_editing(appGroup, false);
             break;
-        case  LV_KEY_RIGHT:
+        case LV_KEY_RIGHT:
             /* code */
             // lv_group_focus_prev(appGroup);
             if (ID == 1)
@@ -117,11 +114,6 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
                 ID -= 1;
                 pageSwitch(ID + 1, ID);
             }
-            lv_group_add_obj(appGroup, imgLogo);
-            lv_group_add_obj(appGroup, labelTitle);
-            lv_obj_set_event_cb(labelTitle, event_callback);
-            lv_obj_set_event_cb(imgLogo, event_callback);
-            lv_group_set_editing(appGroup, false);
 
             // printf("LV_KEY_LEFT");
             // HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);

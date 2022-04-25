@@ -10,7 +10,7 @@
 #include "main.h"
 #include "lcd.h"
 
-#define DRIFT 20
+#define DRIFT 15
 #define MIDDLE 120
 #define SWITCHJUDG 40
 

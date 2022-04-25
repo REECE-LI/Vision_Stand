@@ -41,8 +41,8 @@ PageApp pagesApp[] =
 
 #define offSetY_defult_T 40
 #define offSetY_defult_I 65
-#define offSetX_offset_T 30
-#define offSetX_offset_I 10
+#define offSetX_offset_T 25
+#define offSetX_offset_I 5
 
 static void ex_align_T(lv_obj_t *obj, lv_coord_t x_ofs);
 static void ex_align_I(lv_obj_t *obj, lv_coord_t x_ofs);
@@ -78,17 +78,17 @@ void pageSwitch(u8 idFrom, u8 idTo)
     u8 dir = idFrom > idTo ? 1 : 0;
     if (dir == 0)
     {
-        if (idTo == 3)
-        {
-            creatTitle(pagesApp[idTo].name, offSetX_defult_T + offSetX_offset_T, offSetY_defult_T);
-            creatImg(pagesApp[idTo].src_img, offSetX_defult_I + offSetX_offset_I, offSetY_defult_I - 20);
-            // lv_anim_set_ready_cb(&logoShow, (lv_anim_ready_cb_t)pageControl);
-            realXT = offSetX_defult_T + offSetX_offset_T;
-            realXI = offSetX_defult_I + offSetX_offset_I;
-            realYT = offSetY_defult_T;
-            realYI = offSetY_defult_I - 20;
-        }
-        else
+//        if (idTo == 3)
+//        {
+//            creatTitle(pagesApp[idTo].name, offSetX_defult_T + offSetX_offset_T, offSetY_defult_T);
+//            creatImg(pagesApp[idTo].src_img, offSetX_defult_I + offSetX_offset_I, offSetY_defult_I - 20);
+//            // lv_anim_set_ready_cb(&logoShow, (lv_anim_ready_cb_t)pageControl);
+//            realXT = offSetX_defult_T + offSetX_offset_T;
+//            realXI = offSetX_defult_I + offSetX_offset_I;
+//            realYT = offSetY_defult_T;
+//            realYI = offSetY_defult_I - 20;
+//        }
+//        else
         {
             creatTitle(pagesApp[idTo].name, offSetX_defult_T + offSetX_offset_T, offSetY_defult_T);
             creatImg(pagesApp[idTo].src_img, offSetX_defult_I + offSetX_offset_I, offSetY_defult_I);
@@ -101,16 +101,16 @@ void pageSwitch(u8 idFrom, u8 idTo)
     }
     else
     {
-        if (idTo == 3)
-        {
-            creatTitle(pagesApp[idTo].name, offSetX_defult_T - offSetX_offset_T, offSetY_defult_T);
-            creatImg(pagesApp[idTo].src_img, offSetX_defult_I - offSetX_offset_I, offSetY_defult_I - 20);
-            realXT = offSetX_defult_T - offSetX_offset_T;
-            realXI = offSetX_defult_I - offSetX_offset_I;
-            realYT = offSetY_defult_T;
-            realYI = offSetY_defult_I - 20;
-        }
-        else
+//        if (idTo == 3)
+//        {
+//            creatTitle(pagesApp[idTo].name, offSetX_defult_T - offSetX_offset_T, offSetY_defult_T);
+//            creatImg(pagesApp[idTo].src_img, offSetX_defult_I - offSetX_offset_I, offSetY_defult_I - 20);
+//            realXT = offSetX_defult_T - offSetX_offset_T;
+//            realXI = offSetX_defult_I - offSetX_offset_I;
+//            realYT = offSetY_defult_T;
+//            realYI = offSetY_defult_I - 20;
+//        }
+//        else
         {
             creatTitle(pagesApp[idTo].name, offSetX_defult_T - offSetX_offset_T, offSetY_defult_T);
             creatImg(pagesApp[idTo].src_img, offSetX_defult_I - offSetX_offset_I, offSetY_defult_I);
@@ -127,9 +127,12 @@ void pageSwitch(u8 idFrom, u8 idTo)
     lv_anim_set_time(&titleShow, 300);
     lv_anim_set_time(&logoShow, 300);
     lv_anim_set_values(&titleShow, realXT, offSetX_defult_T);
-    lv_anim_set_values(&logoShow, realXI, offSetX_defult_T);
-    lv_anim_set_playback_delay(&titleShow, 1000);
-    lv_anim_set_playback_delay(&logoShow, 1000);
+    lv_anim_set_values(&logoShow, realXI, offSetX_defult_I);
+    // lv_anim_set_playback_delay(&titleShow, 1000);
+    // lv_anim_set_playback_delay(&logoShow, 1000);
+
+    lv_anim_set_ready_cb(&logoShow, (lv_anim_ready_cb_t)pageImgAnimInit);
+    lv_anim_set_ready_cb(&titleShow, (lv_anim_ready_cb_t)pageTitleAnimInit);
     lv_anim_start(&titleShow);
     lv_anim_start(&logoShow);
 }
@@ -141,5 +144,83 @@ static void ex_align_T(lv_obj_t *obj, lv_coord_t x_ofs)
 
 static void ex_align_I(lv_obj_t *obj, lv_coord_t x_ofs)
 {
-    lv_obj_align(obj, labelTitle, LV_ALIGN_OUT_TOP_MID, x_ofs, realYI);
+    lv_obj_align(obj, NULL, LV_ALIGN_CENTER, x_ofs, realYI-80);
+}
+
+void pageImgAnimInit(void)
+{
+
+    lv_group_add_obj(appGroup, imgLogo);
+    lv_obj_set_event_cb(imgLogo, event_callback);
+    lv_group_set_editing(appGroup, false);
+}
+void pageTitleAnimInit(void)
+{
+    lv_group_add_obj(appGroup, labelTitle);
+    lv_obj_set_event_cb(labelTitle, event_callback);
+    lv_group_set_editing(appGroup, false);
+}
+
+
+static void event_callback(lv_obj_t *obj, lv_event_t event)
+{
+    if (event == LV_EVENT_KEY)
+    {
+        HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
+        static u8 ID = 1;
+        const u32 *key = lv_event_get_data();
+        switch (*key)
+        {
+        case LV_KEY_UP:
+            /* code */
+            // printf("LV_KEY_UP");
+            // HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
+            break;
+        case LV_KEY_DOWN:
+            /* code */
+            // printf("LV_KEY_DOWN");
+            // HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
+            break;
+        case LV_KEY_LEFT:
+            /* code */
+            // lv_group_focus_next(appGroup);
+            if (ID == 4)
+            {
+                pageSwitch(0, 1);
+                ID = 1;
+            }
+            else
+            {
+                ID += 1;
+                pageSwitch(ID - 1, ID);
+            }
+
+            break;
+        case LV_KEY_RIGHT:
+            /* code */
+            // lv_group_focus_prev(appGroup);
+            if (ID == 1)
+            {
+                pageSwitch(5, 4);
+                ID = 4;
+            }
+            else
+            {
+                ID -= 1;
+                pageSwitch(ID + 1, ID);
+            }
+
+            // printf("LV_KEY_LEFT");
+            // HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
+            break;
+        case LV_KEY_ENTER:
+            /* code */
+            // printf("LV_KEY_ENTER");
+            // HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
+            break;
+
+        default:
+            break;
+        }
+    }
 }

@@ -54,5 +54,7 @@ void creatImg(const void * src_img, int8_t offSetX, int8_t offSetY);
 void creatTitle(const char *text, int8_t offSetX, int8_t offSetY);
 //void event_callback(void);
 void pageSwitch(u8 idFrom, u8 idTo);
+void pageTitleAnimInit(void);
+void pageImgAnimInit(void);
 
 #endif
