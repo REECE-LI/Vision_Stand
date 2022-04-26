@@ -50,6 +50,8 @@ void pageControl(void)
 u8 camX, camY;
 lv_obj_t *page;
 lv_obj_t *ledC;
+lv_obj_t *btnSave;
+lv_obj_t *btnExit;
 void appControl(void)
 {
 // 进入函数清屏 TMD 进去死机 不进去了 直接覆盖 LMM
@@ -85,8 +87,29 @@ void appControl(void)
     lv_obj_set_event_cb(ledC, event_callback);
     lv_group_set_editing(appGroup, false);
 
+    // 接下来进入 按钮保存环节 和退出环节
+    // 操了我不想写了
+    // 这尼玛的 太难了
+    // 求求了
+    // cnm cnm cnm
 
-    
+    btnSave = lv_btn_create(appWindow, NULL);
+    btnExit = lv_btn_create(appWindow, NULL);
+    lv_obj_set_style_local_radius(btnSave, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 7);
+    lv_obj_set_style_local_radius(btnExit, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 7);
+    lv_obj_set_size(btnSave, 60, 40);
+    lv_obj_set_size(btnExit, 60, 40);
+    lv_obj_align(btnSave, page, LV_ALIGN_OUT_RIGHT_TOP, 10, 20);
+    lv_obj_align(btnExit, page, LV_ALIGN_OUT_RIGHT_BOTTOM, 10, -20);
+    lv_obj_set_event_cb(btnSave, event_callback);
+    lv_obj_set_event_cb(btnExit, event_callback);
+
+    lv_obj_t *label;
+    label = lv_label_create(btnSave, NULL);
+    lv_label_set_text(label, "SAVE");
+
+    label = lv_label_create(btnExit, NULL);
+    lv_label_set_text(label, "EXIT");
 }
 
 static void event_callback(lv_obj_t *obj, lv_event_t event)
