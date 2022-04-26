@@ -218,7 +218,7 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             /* code */
 
             //HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
-            if (ID = 1)
+            if (ID == 1)
             appControl();
 
         default:
