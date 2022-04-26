@@ -75,7 +75,9 @@ void getAd(void)
  */
 dir_t keyDir(void)
 {
-    if (pressJudg_R(PRESS_GPIO_Port, PRESS_Pin)) return press;
+    static u8 P;
+    P = pressJudg_R(PRESS_GPIO_Port, PRESS_Pin);
+    if (P) return press;
     if (screenSite.x_now < MIDDLE - SWITCHJUDG && screenSite.y_now > MIDDLE - DRIFT && screenSite.y_now < MIDDLE + DRIFT)
         return left;
     else if (screenSite.x_now > MIDDLE + SWITCHJUDG && screenSite.y_now > MIDDLE - DRIFT && screenSite.y_now < MIDDLE + DRIFT)

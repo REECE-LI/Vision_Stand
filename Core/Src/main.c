@@ -109,42 +109,42 @@ int main(void)
 
 #if (LVGL_RUN == 1)
   lv_init();
-  lv_port_disp_init(); // 显示器初始化
-  lv_port_indev_init();//
-
+  lv_port_disp_init();  // 显示器初始化
+  lv_port_indev_init(); //
 
 #else
   LCD_Init();
   LCD_Fill(0, 0, 240, 240, WHITE);
-	HAL_Delay(1000);
+  HAL_Delay(1000);
 #endif
 
   // printf("OK");
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&ADC_Value, 50);
-	//LCD_ShowPicture(0,0,240,240,gImage_we);
-	
-	//DMA_Fill(0,0,240,240,(u8*)gImage_we);
+  // LCD_ShowPicture(0,0,240,240,gImage_we);
+
+  // DMA_Fill(0,0,240,240,(u8*)gImage_we);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	
-  
-	
+
 #if LVGL_RUN
   startUp();
-	
+
 #endif
-HAL_TIM_Base_Start_IT(&htim3);
+  HAL_TIM_Base_Start_IT(&htim3);
   while (1)
   {
-		//HAL_UART_Transmit(&huart1, (u8*)ADC_Value, 2, 10);
+    // 只是为了看一下CPU正真的利用率
+#if 0
+    HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
+#endif
 #if LVGL_RUN
     lv_task_handler();
 #else
-		
-		//LCD_ShowPicture(0,0,240,240,(u8*)gImage_1);
+
+    // LCD_ShowPicture(0,0,240,240,(u8*)gImage_1);
 //		getAd();
 //    doSth();
 #endif

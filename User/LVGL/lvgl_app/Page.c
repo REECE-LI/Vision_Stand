@@ -9,6 +9,9 @@
 #include "usart.h"
 
 static void event_callback(lv_obj_t *obj, lv_event_t event);
+
+
+
 // 页面窗口
 lv_obj_t *appWindow;
 
@@ -28,7 +31,7 @@ LV_IMG_DECLARE(imgAbout);
 
 PageApp pagesApp[] =
     {
-        {.pageID = PAGE_NONE},
+        {.src_img = &imgControl,.pageID = PAGE_NONE},
         {.src_img = &imgControl, .name = "CONTROL", .pageID = PAGE_CONTROL},
         {.src_img = &imgRemember, .name = "REMEMBER", .pageID = PAGE_REMEMBER},
         {.src_img = &imgRoll, .name = "ROLL", .pageID = PAGE_ROLL},
@@ -161,25 +164,24 @@ void pageTitleAnimInit(void)
     lv_group_set_editing(appGroup, false);
 }
 
-
+extern u8 idX;
+extern u8 idY;
 static void event_callback(lv_obj_t *obj, lv_event_t event)
 {
     if (event == LV_EVENT_KEY)
     {
-        HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
+        // HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
         static u8 ID = 1;
         const u32 *key = lv_event_get_data();
         switch (*key)
         {
         case LV_KEY_UP:
             /* code */
-            // printf("LV_KEY_UP");
-            // HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
+            
             break;
         case LV_KEY_DOWN:
             /* code */
-            // printf("LV_KEY_DOWN");
-            // HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
+           HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
             break;
         case LV_KEY_LEFT:
             /* code */
@@ -213,11 +215,12 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             // printf("LV_KEY_LEFT");
             // HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
             break;
-        case LV_KEY_ENTER:
+        case LV_KEY_FUC:
             /* code */
-            // printf("LV_KEY_ENTER");
-            // HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
-            break;
+
+            //HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
+            
+            appControl();
 
         default:
             break;

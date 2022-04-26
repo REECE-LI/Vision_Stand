@@ -44,6 +44,7 @@ typedef struct
 } PageApp;
 
 
+
 extern PageApp pagesApp[];
 
 
@@ -56,5 +57,8 @@ void creatTitle(const char *text, int8_t offSetX, int8_t offSetY);
 void pageSwitch(u8 idFrom, u8 idTo);
 void pageTitleAnimInit(void);
 void pageImgAnimInit(void);
+
+
+void appControl(void);
 
 #endif

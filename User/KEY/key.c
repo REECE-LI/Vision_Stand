@@ -44,11 +44,8 @@ u8 pressJudg_R(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 {
     if (HAL_GPIO_ReadPin(GPIOx, GPIO_Pin) == GPIO_PIN_RESET)
     {
-        // HAL_Delay(5);
-        // if (HAL_GPIO_ReadPin(GPIOx, GPIO_Pin) == GPIO_PIN_SET)
-        // {
-        //     while (HAL_GPIO_ReadPin(GPIOx, GPIO_Pin) == GPIO_PIN_SET);
-        // HAL_UART_Transmit(&huart1, (u8*)ADC_Value, 2, 10);
+        // HAL_Delay(10);
+        // if(HAL_GPIO_ReadPin(GPIOx, GPIO_Pin) == GPIO_PIN_SET)
             return 1;
         // }
         // return 0;

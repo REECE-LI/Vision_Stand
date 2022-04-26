@@ -294,7 +294,7 @@ static bool keypad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
         /*Translate the keys to LVGL control characters according to your key definitions*/
         switch(act_key_t) {
         case press:
-            act_key = LV_KEY_ENTER;
+            act_key = LV_KEY_FUC;
             break;
         case up:
             act_key = LV_KEY_UP;
