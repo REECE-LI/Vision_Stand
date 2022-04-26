@@ -3,7 +3,7 @@
  *
  */
 
- /*Copy this file as "lv_port_indev.c" and set this value to "1" to enable content*/
+/*Copy this file as "lv_port_indev.c" and set this value to "1" to enable content*/
 #if 1
 
 /*********************
@@ -31,10 +31,10 @@
 // static void mouse_init(void);
 // static bool mouse_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
 // static bool mouse_is_pressed(void);
-//static void mouse_get_xy(lv_coord_t * x, lv_coord_t * y);
+// static void mouse_get_xy(lv_coord_t * x, lv_coord_t * y);
 
 static void keypad_init(void);
-static bool keypad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
+static bool keypad_read(lv_indev_drv_t *indev_drv, lv_indev_data_t *data);
 static uint32_t keypad_get_key(void);
 
 // static void encoder_init(void);
@@ -49,11 +49,11 @@ static uint32_t keypad_get_key(void);
 /**********************
  *  STATIC VARIABLES
  **********************/
-lv_indev_t * indev_touchpad;
-lv_indev_t * indev_mouse;
-lv_indev_t * indev_keypad;
-lv_indev_t * indev_encoder;
-lv_indev_t * indev_button;
+lv_indev_t *indev_touchpad;
+lv_indev_t *indev_mouse;
+lv_indev_t *indev_keypad;
+lv_indev_t *indev_encoder;
+lv_indev_t *indev_button;
 
 static int32_t encoder_diff;
 static lv_indev_state_t encoder_state;
@@ -277,22 +277,24 @@ static void keypad_init(void)
 }
 
 /* Will be called by the library to read the mouse */
-static bool keypad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
+static bool keypad_read(lv_indev_drv_t *indev_drv, lv_indev_data_t *data)
 {
     static dir_t last_key = 0;
 
     /*Get the current x and y coordinates*/
-    //mouse_get_xy(&data->point.x, &data->point.y);
+    // mouse_get_xy(&data->point.x, &data->point.y);
 
     /*Get whether the a key is pressed and save the pressed key*/
-		getAd();
+    getAd();
     dir_t act_key_t = keyDir();
     uint32_t act_key;
-    if(act_key_t != 0) {
+    if (act_key_t != 0)
+    {
         data->state = LV_INDEV_STATE_PR;
 
         /*Translate the keys to LVGL control characters according to your key definitions*/
-        switch(act_key_t) {
+        switch (act_key_t)
+        {
         case press:
             act_key = LV_KEY_FUC;
             break;
@@ -308,10 +310,24 @@ static bool keypad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
         case down:
             act_key = LV_KEY_DOWN;
             break;
+        case up_left:
+            act_key = LV_KEY_UP_LEFT;
+            break;
+        case up_right:
+            act_key = LV_KEY_UP_RIGHT;
+            break;
+        case down_right:
+            act_key = LV_KEY_DOWN_RIGHT;
+            break;
+        case down_left:
+            act_key = LV_KEY_DOWN_LEFT;
+            break;
         }
 
         last_key = act_key;
-    } else {
+    }
+    else
+    {
         data->state = LV_INDEV_STATE_REL;
     }
 

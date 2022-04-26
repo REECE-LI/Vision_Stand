@@ -11,9 +11,7 @@
 
 lv_obj_t *barStart;
 lv_obj_t *Logo;
-
-// extern u8 idX;
-// extern u8 idY;
+extern u8 camX,camY;
 // extern lv_obj_t *appWindow;
 // extern void pageControl(void);
 // // extern void pageRemember(void);
@@ -36,7 +34,7 @@ void startUp(void)
     lv_anim_t logoShow;
     lv_anim_init(&logoShow);
 	
-	// idX = idY = 0;
+	camX = camY = 0;
 // 上面画面启动时，需要加载的东西
     appWindow = lv_scr_act();
     // appWindow = lv_obj_create(NULL, NULL);

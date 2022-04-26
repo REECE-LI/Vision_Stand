@@ -152,7 +152,6 @@ static void ex_align_I(lv_obj_t *obj, lv_coord_t x_ofs)
 
 void pageImgAnimInit(void)
 {
-
     lv_group_add_obj(appGroup, imgLogo);
     lv_obj_set_event_cb(imgLogo, event_callback);
     lv_group_set_editing(appGroup, false);
@@ -219,7 +218,7 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             /* code */
 
             //HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
-            
+            if (ID = 1)
             appControl();
 
         default:
