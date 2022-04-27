@@ -137,7 +137,7 @@ int main(void)
   while (1)
   {
     // 只是为了看一下CPU正真的利用率
-#if 0
+#if 1
     HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
 #endif
 #if LVGL_RUN

@@ -10,10 +10,13 @@
 #include "page.h"
 #include "usart.h"
 
-#define CANVAS_WIDTH 150
-#define CANVAS_HEIGHT 180
-
+static void savePos(void);
 static void event_callback(lv_obj_t *obj, lv_event_t event);
+static void kb_create(void);
+static void kb_event_cb(lv_obj_t *keyboard, lv_event_t e);
+static void ta_event_cb(lv_obj_t *ta_local, lv_event_t e);
+static lv_obj_t *kb;
+static lv_obj_t *ta;
 
 /**
  * @Name: pageControl
@@ -52,6 +55,13 @@ lv_obj_t *page;
 lv_obj_t *ledC;
 lv_obj_t *btnSave;
 lv_obj_t *btnExit;
+/**
+ * @Name: appControl
+ * @Description: 界面控制 3个元素
+ * @Author: 李明骏
+ * @Return:
+ * @Date: 2022-04-27 11:08:43
+ */
 void appControl(void)
 {
 // 进入函数清屏 TMD 进去死机 不进去了 直接覆盖 LMM
@@ -75,7 +85,7 @@ void appControl(void)
     lv_page_set_scrlbar_mode(page, LV_SCRLBAR_MODE_OFF);
     ledC = lv_led_create(page, NULL);
     lv_led_set_bright(ledC, LV_LED_BRIGHT_MAX);
-   // lv_obj_set_style_local_bg_color(ledC, LV_STATE_FOCUSED, LV_STATE_DEFAULT, LV_COLOR_BLACK);
+    // lv_obj_set_style_local_bg_color(ledC, LV_STATE_FOCUSED, LV_STATE_DEFAULT, LV_COLOR_BLACK);
     // lv_obj_set_style_local_border_width(ledC, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 5);
     lv_obj_set_style_local_bg_color(ledC, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
     lv_obj_set_style_local_bg_color(ledC, LV_STATE_DEFAULT, LV_STATE_DEFAULT, LV_COLOR_BLACK);
@@ -100,10 +110,10 @@ void appControl(void)
     lv_obj_set_style_local_radius(btnSave, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 7);
     lv_obj_set_style_local_radius(btnExit, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 7);
 
-lv_obj_set_style_local_border_color(btnSave, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
-lv_obj_set_style_local_border_color(btnExit, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
-lv_obj_set_style_local_border_width(btnSave, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 3);
-lv_obj_set_style_local_border_width(btnExit, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 3);
+    lv_obj_set_style_local_border_color(btnSave, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
+    lv_obj_set_style_local_border_color(btnExit, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
+    lv_obj_set_style_local_border_width(btnSave, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 3);
+    lv_obj_set_style_local_border_width(btnExit, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 3);
 
     lv_obj_set_size(btnSave, 60, 40);
     lv_obj_set_size(btnExit, 60, 40);
@@ -225,8 +235,12 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             }
             else if (obj == btnSave)
             {
-                // save in flash
+// save in flash
+#if 1
+                savePos();
+#else
                 lv_group_focus_next(appGroup);
+#endif
             }
             break;
 
@@ -237,5 +251,56 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
         {
             lv_obj_set_pos(ledC, 110 - camX, 130 - camY);
         }
+    }
+}
+
+/**
+ * @Name: savePos
+ * @Description: 保存地址进入flash
+ * @Author: 李明骏
+ * @Return:
+ * @Date: 2022-04-27 11:10:19
+ */
+static void savePos(void)
+{
+// 不管干啥了 先TMD 清屏
+#if 1
+    lv_obj_clean(appWindow);
+#endif
+    ta = lv_textarea_create(appWindow, NULL);
+    lv_obj_align(ta, NULL, LV_ALIGN_IN_TOP_MID, 0, LV_DPI);
+    lv_obj_set_event_cb(ta, ta_event_cb);
+    lv_textarea_set_text(ta, "");
+    lv_coord_t max_h = LV_VER_RES / 2 - LV_DPI/2;
+    if (lv_obj_get_height(ta) > max_h)
+        lv_obj_set_height(ta, max_h);
+
+    kb_create();
+}
+
+static void kb_create(void)
+{
+    kb = lv_keyboard_create(appWindow, NULL);
+    lv_keyboard_set_cursor_manage(kb, true);
+    lv_obj_set_event_cb(kb, kb_event_cb);
+    lv_keyboard_set_textarea(kb, ta);
+}
+
+static void kb_event_cb(lv_obj_t *keyboard, lv_event_t e)
+{
+    lv_keyboard_def_event_cb(kb, e);
+    if (e == LV_EVENT_CANCEL)
+    {
+        lv_keyboard_set_textarea(kb, NULL);
+        lv_obj_del(kb);
+        kb = NULL;
+    }
+}
+
+static void ta_event_cb(lv_obj_t *ta_local, lv_event_t e)
+{
+    if (e == LV_EVENT_CLICKED && kb == NULL)
+    {
+        kb_create();
     }
 }
