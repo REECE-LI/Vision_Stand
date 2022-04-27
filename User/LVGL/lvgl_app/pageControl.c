@@ -267,27 +267,34 @@ static void savePos(void)
 #if 1
     lv_obj_clean(appWindow);
 #endif
+    // 创建一个文本框显示 输入的内容
     ta = lv_textarea_create(appWindow, NULL);
     lv_obj_align(ta, NULL, LV_ALIGN_IN_TOP_MID, 0, LV_DPI);
     lv_obj_set_event_cb(ta, ta_event_cb);
     lv_textarea_set_text(ta, "");
-    lv_coord_t max_h = LV_VER_RES / 2 - LV_DPI/2;
+    lv_coord_t max_h = LV_VER_RES / 2 - LV_DPI / 2;
     if (lv_obj_get_height(ta) > max_h)
         lv_obj_set_height(ta, max_h);
-
+    // 创建键盘
     kb_create();
 }
 
 static void kb_create(void)
 {
     kb = lv_keyboard_create(appWindow, NULL);
+    // 自动显示输入的内容
     lv_keyboard_set_cursor_manage(kb, true);
+    // 加入事件
     lv_obj_set_event_cb(kb, kb_event_cb);
+    // 显示输入的文本框
     lv_keyboard_set_textarea(kb, ta);
+    
 }
 
 static void kb_event_cb(lv_obj_t *keyboard, lv_event_t e)
 {
+    // woc 这尼玛的 怎么用摇杆控制 我人杀了呀
+    // 日你妈逼的 操
     lv_keyboard_def_event_cb(kb, e);
     if (e == LV_EVENT_CANCEL)
     {
@@ -301,6 +308,7 @@ static void ta_event_cb(lv_obj_t *ta_local, lv_event_t e)
 {
     if (e == LV_EVENT_CLICKED && kb == NULL)
     {
+        // 用刷新键盘的检测输入的内容 显示在文件上
         kb_create();
     }
 }
