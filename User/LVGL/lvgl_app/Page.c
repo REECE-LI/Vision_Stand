@@ -5,7 +5,7 @@
  * @Date: 2022-04-25 10:10:09
  *
  */
-#include "Page.h"
+#include "page.h"
 #include "usart.h"
 
 static void event_callback(lv_obj_t *obj, lv_event_t event);
@@ -36,6 +36,7 @@ PageApp pagesApp[] =
         {.src_img = &imgRemember, .name = "REMEMBER", .pageID = PAGE_REMEMBER},
         {.src_img = &imgRoll, .name = "ROLL", .pageID = PAGE_ROLL},
         {.src_img = &imgAbout, .name = "ABOUT", .pageID = PAGE_ABOUT},
+        {.name = "TODO LIST"},
 
 };
 
@@ -222,7 +223,21 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
 
             //HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
             if (ID == 1)
-            appControl();
+						{
+							appControl();
+						}
+            
+            else if (ID == 2)
+            appRemember();
+            else if (ID == 3)
+            {
+                appRoll();
+            }
+            else if (ID == 4)
+            {
+                appAbout();
+            }
+            
 
         default:
             break;

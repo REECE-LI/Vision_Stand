@@ -126,3 +126,6 @@ adc_f4_test\pageremember.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_ti
 adc_f4_test\pageremember.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 adc_f4_test\pageremember.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 adc_f4_test\pageremember.o: ..\User\config.h
+adc_f4_test\pageremember.o: ..\User\LVGL\lvgl_app\page.h
+adc_f4_test\pageremember.o: ../Core/Inc/usart.h
+adc_f4_test\pageremember.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

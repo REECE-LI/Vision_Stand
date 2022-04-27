@@ -12,11 +12,11 @@
 
 static void savePos(void);
 static void event_callback(lv_obj_t *obj, lv_event_t event);
-static void kb_create(void);
-static void kb_event_cb(lv_obj_t *keyboard, lv_event_t e);
-static void ta_event_cb(lv_obj_t *ta_local, lv_event_t e);
-static lv_obj_t *kb;
-static lv_obj_t *ta;
+
+static lv_obj_t *btnPos1;
+static lv_obj_t *btnPos2;
+static lv_obj_t *btnPos3;
+static lv_obj_t *btnPos4;
 
 /**
  * @Name: pageControl
@@ -112,6 +112,9 @@ void appControl(void)
 
     lv_obj_set_style_local_border_color(btnSave, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
     lv_obj_set_style_local_border_color(btnExit, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
+
+    lv_obj_set_style_local_outline_color(btnSave, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
+    lv_obj_set_style_local_outline_color(btnExit, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
     lv_obj_set_style_local_border_width(btnSave, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 3);
     lv_obj_set_style_local_border_width(btnExit, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 3);
 
@@ -242,6 +245,11 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
                 lv_group_focus_next(appGroup);
 #endif
             }
+            else if (obj == btnPos1 || obj == btnPos2 || obj == btnPos3 || obj == btnPos4)
+            {
+                 pageSwitch(5, 1);
+            }
+
             break;
 
         default:
@@ -261,81 +269,67 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
  * @Return:
  * @Date: 2022-04-27 11:10:19
  */
+
 static void savePos(void)
 {
 // 不管干啥了 先TMD 清屏
 #if 1
     lv_obj_clean(appWindow);
 #endif
-    // 创建一个文本框显示 输入的内容
-    ta = lv_textarea_create(appWindow, NULL);
-    lv_obj_align(ta, NULL, LV_ALIGN_IN_TOP_MID, 0, 40);
-    lv_obj_set_style_local_border_width(ta, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 2);
-    // lv_obj_set_style_local_border_width(ta, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 2);
-    lv_obj_set_event_cb(ta, ta_event_cb);
-    lv_textarea_set_text(ta, "");
-    lv_coord_t max_h = LV_VER_RES / 2 - LV_DPI / 2;
-    if (lv_obj_get_height(ta) > max_h)
-        lv_obj_set_height(ta, max_h);
-#if 0
-    // 将文本框加入group中 
-    // 别加了 加了 会出事！！！
-    lv_group_add_obj(appGroup, ta);
-#endif
-    // 创建键盘
-    kb_create();
-}
+    btnPos1 = lv_btn_create(appWindow, NULL);
+    btnPos2 = lv_btn_create(appWindow, NULL);
+    btnPos3 = lv_btn_create(appWindow, NULL);
+    btnPos4 = lv_btn_create(appWindow, NULL);
 
-static void kb_create(void)
-{
-    kb = lv_keyboard_create(appWindow, NULL);
-    // 自动显示输入的内容
-    lv_keyboard_set_cursor_manage(kb, true);
-    // 加入事件
-    lv_obj_set_event_cb(kb, kb_event_cb);
-    // 显示输入的文本框
-    lv_keyboard_set_textarea(kb, ta);
+    lv_obj_set_size(btnPos1, 80, 50);
+    lv_obj_set_size(btnPos2, 80, 50);
+    lv_obj_set_size(btnPos3, 80, 50);
+    lv_obj_set_size(btnPos4, 80, 50);
 
-    // 尝试将键盘加入进组 提问？ 清屏之后 之前的组还在了吗?
-    // 默认不在了 尝试 成功！！！！牛逼 但是边框太小了 我都看不清
-    lv_group_add_obj(appGroup, kb);
-    lv_group_set_editing(appGroup, true); // 还是要确认为编辑模式
-// 这里尝试将边框的宽度修改一下 并且修改一下颜色 红色的 尽显高级质感
-#if 0 // 可惜 修改无效
-    lv_obj_set_style_local_border_color(kb, LV_STATE_DEFAULT, LV_STATE_HOVERED, LV_COLOR_RED);
-    lv_obj_set_style_local_border_width(kb, LV_STATE_DEFAULT, LV_STATE_HOVERED, 2); // 宽度 没必要大 gogogo
-#endif
-}
+    lv_obj_set_style_local_radius(btnPos1, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 7);
+    lv_obj_set_style_local_radius(btnPos2, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 7);
+    lv_obj_set_style_local_radius(btnPos3, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 7);
+    lv_obj_set_style_local_radius(btnPos4, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 7);
 
-static void kb_event_cb(lv_obj_t *keyboard, lv_event_t e)
-{
-    // woc 这尼玛的 怎么用摇杆控制 我人杀了呀
-    // 日你妈逼的 操
-    // 我日尼玛的哦 还要进这个函数 套娃？？？
-    // 日你妈的 这个函数看不懂 改外面的参数！！！！ 操
+    lv_obj_set_style_local_outline_color(btnPos1, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
+    lv_obj_set_style_local_outline_color(btnPos2, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
+    lv_obj_set_style_local_outline_color(btnPos3, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
+    lv_obj_set_style_local_outline_color(btnPos4, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
 
-    if (e == LV_EVENT_CANCEL)
-    {
-        lv_keyboard_set_textarea(kb, NULL);
-        lv_obj_del(kb);
-        kb = NULL;
-    }
-    else if (e == LV_KEY_FUC)
-    {
-        e = LV_EVENT_VALUE_CHANGED;
-    }
-    // lv_keyboard_def_event_cb(kb, e);
-}
+    lv_obj_set_style_local_border_color(btnPos1, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
+    lv_obj_set_style_local_border_color(btnPos2, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
+    lv_obj_set_style_local_border_color(btnPos3, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
+    lv_obj_set_style_local_border_color(btnPos4, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
+    lv_obj_set_style_local_border_width(btnPos1, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 3);
+    lv_obj_set_style_local_border_width(btnPos2, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 3);
+    lv_obj_set_style_local_border_width(btnPos3, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 3);
+    lv_obj_set_style_local_border_width(btnPos4, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 3);
 
-static void ta_event_cb(lv_obj_t *ta_local, lv_event_t e)
-{
-    if (e == LV_EVENT_CLICKED && kb == NULL)
-    {
-        // 键盘出现
-        kb_create();
-    }
-    else
-    {
-        lv_group_focus_next(appGroup);
-    }
+    lv_obj_align(btnPos1, NULL, LV_ALIGN_CENTER, -55, -50);
+    lv_obj_align(btnPos2, NULL, LV_ALIGN_CENTER, 55, -50);
+    lv_obj_align(btnPos3, NULL, LV_ALIGN_CENTER, -55, 50);
+    lv_obj_align(btnPos4, NULL, LV_ALIGN_CENTER, 55, 50);
+
+    lv_obj_t *label;
+    label = lv_label_create(btnPos1, NULL);
+    lv_label_set_text(label, "POS1");
+
+    label = lv_label_create(btnPos2, NULL);
+    lv_label_set_text(label, "POS2");
+    label = lv_label_create(btnPos3, NULL);
+    lv_label_set_text(label, "POS3");
+    label = lv_label_create(btnPos4, NULL);
+    lv_label_set_text(label, "POS4");
+
+    lv_obj_set_event_cb(btnPos1, event_callback);
+    lv_obj_set_event_cb(btnPos2, event_callback);
+    lv_obj_set_event_cb(btnPos3, event_callback);
+    lv_obj_set_event_cb(btnPos4, event_callback);
+
+    lv_group_add_obj(appGroup, btnPos1);
+    lv_group_add_obj(appGroup, btnPos2);
+    lv_group_add_obj(appGroup, btnPos3);
+    lv_group_add_obj(appGroup, btnPos4);
+
+    lv_group_set_editing(appGroup, true);
 }

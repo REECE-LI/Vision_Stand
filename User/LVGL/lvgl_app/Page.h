@@ -50,7 +50,8 @@ extern PageApp pagesApp[];
 
 
 void pageControl(void);
-void pageRemember(void);
+
+
 void creatImg(const void * src_img, int8_t offSetX, int8_t offSetY);
 void creatTitle(const char *text, int8_t offSetX, int8_t offSetY);
 //void event_callback(void);

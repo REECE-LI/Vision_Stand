@@ -11,6 +11,7 @@
 #include "usart.h"
 
 static void event_callback(lv_obj_t *obj, lv_event_t event);
+void appAbout(void);
 
 /**
  * @Name: pageControl
@@ -19,7 +20,7 @@ static void event_callback(lv_obj_t *obj, lv_event_t event);
  * @Return:
  * @Date: 2022-04-25 10:30:47
  */
-void pageControl(void)
+void appAbout(void)
 {
 
     // LV_IMG_DECLARE(imgControl);
@@ -33,8 +34,8 @@ void pageControl(void)
     creatTitle("CONTROL", 0, 40);
     creatImg(&imgControl, 0 ,65);
 #else
-    creatTitle(pagesApp[4].name, 0, 40);
-    creatImg(pagesApp[4].src_img, 0, 65);
+    creatTitle(pagesApp[5].name, 0, 40);
+    creatImg(pagesApp[5].src_img, 0, 65);
 
 #endif
     pageImgAnimInit();

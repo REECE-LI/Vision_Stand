@@ -1,5 +1,5 @@
 adc_f4_test\page.o: ..\User\LVGL\lvgl_app\Page.c
-adc_f4_test\page.o: ..\User\LVGL\lvgl_app\Page.h
+adc_f4_test\page.o: ..\User\LVGL\lvgl_app\page.h
 adc_f4_test\page.o: ..\User\LVGL\lvgl\lvgl.h
 adc_f4_test\page.o: ..\User\LVGL\lvgl\src/lv_misc/lv_log.h
 adc_f4_test\page.o: ..\User\LVGL\lvgl\src/lv_misc/../lv_conf_internal.h

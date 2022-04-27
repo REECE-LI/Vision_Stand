@@ -1790,7 +1790,7 @@
                   <RVCTZI>0</RVCTZI>
                   <RVCTOtherData>0</RVCTOtherData>
                   <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
+                  <IncludeInBuild>1</IncludeInBuild>
                   <AlwaysBuild>2</AlwaysBuild>
                   <GenerateAssemblyFile>2</GenerateAssemblyFile>
                   <AssembleAssemblyFile>2</AssembleAssemblyFile>
@@ -1834,6 +1834,16 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>
+            </File>
+            <File>
+              <FileName>pageAbout.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\LVGL\lvgl_app\pageAbout.c</FilePath>
+            </File>
+            <File>
+              <FileName>pageRoll.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\LVGL\lvgl_app\pageRoll.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -11,7 +11,7 @@
 #include "usart.h"
 
 static void event_callback(lv_obj_t *obj, lv_event_t event);
-
+void appRoll(void);
 /**
  * @Name: pageControl
  * @Description: 这个函数只会进入一次 之后的app页面处理函数另外写
@@ -19,7 +19,7 @@ static void event_callback(lv_obj_t *obj, lv_event_t event);
  * @Return:
  * @Date: 2022-04-25 10:30:47
  */
-void pageControl(void)
+void appRoll(void)
 {
 
     // LV_IMG_DECLARE(imgControl);
@@ -33,9 +33,8 @@ void pageControl(void)
     creatTitle("CONTROL", 0, 40);
     creatImg(&imgControl, 0 ,65);
 #else
-    creatTitle(pagesApp[3].name, 0, 40);
-    creatImg(pagesApp[3].src_img, 0, 65);
-
+    creatTitle(pagesApp[5].name, 0, 40);
+    creatImg(pagesApp[5].src_img, 0, 65);
 #endif
     pageImgAnimInit();
     pageTitleAnimInit();
