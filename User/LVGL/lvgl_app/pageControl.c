@@ -75,32 +75,40 @@ void appControl(void)
     lv_page_set_scrlbar_mode(page, LV_SCRLBAR_MODE_OFF);
     ledC = lv_led_create(page, NULL);
     lv_led_set_bright(ledC, LV_LED_BRIGHT_MAX);
-    lv_obj_set_style_local_bg_color(ledC, LV_STATE_DEFAULT, LV_STATE_DEFAULT, LV_COLOR_RED);
+   // lv_obj_set_style_local_bg_color(ledC, LV_STATE_FOCUSED, LV_STATE_DEFAULT, LV_COLOR_BLACK);
+    // lv_obj_set_style_local_border_width(ledC, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 5);
+    lv_obj_set_style_local_bg_color(ledC, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
+    lv_obj_set_style_local_bg_color(ledC, LV_STATE_DEFAULT, LV_STATE_DEFAULT, LV_COLOR_BLACK);
     lv_obj_set_style_local_border_color(ledC, LV_STATE_DEFAULT, LV_STATE_DEFAULT, LV_COLOR_RED);
-    lv_obj_set_style_local_shadow_color(ledC, LV_STATE_DEFAULT, LV_STATE_DEFAULT, LV_COLOR_RED);
+    lv_obj_set_style_local_shadow_color(ledC, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
+    lv_obj_set_style_local_shadow_color(ledC, LV_STATE_DEFAULT, LV_STATE_DEFAULT, LV_COLOR_BLACK);
     lv_led_on(ledC); // 睁大狗眼 好好看！！！
                      // 坐标极限（0，0） （110，130）
     lv_obj_set_pos(ledC, 110 - camX, 130 - camY);
-    // 加入app组中 进行位置的控制
 
+    // 加入app组中 进行位置的控制
     lv_group_add_obj(appGroup, ledC);
     lv_obj_set_event_cb(ledC, event_callback);
-    lv_group_set_editing(appGroup, false);
 
     // 接下来进入 按钮保存环节 和退出环节
     // 操了我不想写了
     // 这尼玛的 太难了
     // 求求了
     // cnm cnm cnm
-
     btnSave = lv_btn_create(appWindow, NULL);
     btnExit = lv_btn_create(appWindow, NULL);
     lv_obj_set_style_local_radius(btnSave, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 7);
     lv_obj_set_style_local_radius(btnExit, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 7);
+
+lv_obj_set_style_local_border_color(btnSave, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
+lv_obj_set_style_local_border_color(btnExit, LV_STATE_DEFAULT, LV_STATE_FOCUSED, LV_COLOR_RED);
+lv_obj_set_style_local_border_width(btnSave, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 3);
+lv_obj_set_style_local_border_width(btnExit, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 3);
+
     lv_obj_set_size(btnSave, 60, 40);
     lv_obj_set_size(btnExit, 60, 40);
-    lv_obj_align(btnSave, page, LV_ALIGN_OUT_RIGHT_TOP, 10, 20);
-    lv_obj_align(btnExit, page, LV_ALIGN_OUT_RIGHT_BOTTOM, 10, -20);
+    lv_obj_align(btnSave, page, LV_ALIGN_OUT_RIGHT_TOP, 13, 20);
+    lv_obj_align(btnExit, page, LV_ALIGN_OUT_RIGHT_BOTTOM, 13, -20);
     lv_obj_set_event_cb(btnSave, event_callback);
     lv_obj_set_event_cb(btnExit, event_callback);
 
@@ -110,6 +118,11 @@ void appControl(void)
 
     label = lv_label_create(btnExit, NULL);
     lv_label_set_text(label, "EXIT");
+
+    lv_group_add_obj(appGroup, btnSave);
+    lv_group_add_obj(appGroup, btnExit);
+
+    lv_group_set_editing(appGroup, true);
 }
 
 static void event_callback(lv_obj_t *obj, lv_event_t event)
@@ -128,6 +141,8 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
                 if (camY < 130)
                     camY += 10;
             }
+            else
+                lv_group_focus_prev(appGroup);
             break;
         case LV_KEY_DOWN:
             /* code */
@@ -136,6 +151,8 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
                 if (camY > 0)
                     camY -= 10;
             }
+            else
+                lv_group_focus_next(appGroup);
             break;
         case LV_KEY_LEFT:
             /* code */
@@ -144,7 +161,8 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
                 if (camX < 110)
                     camX += 10;
             }
-
+            else
+                lv_group_focus_prev(appGroup);
             break;
         case LV_KEY_RIGHT:
             /* code */
@@ -154,8 +172,9 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
                 if (camX > 0)
                     camX -= 10;
             }
+            else
+                lv_group_focus_next(appGroup);
             break;
-
         case LV_KEY_UP_LEFT:
             /* code */
             if (obj == ledC)
@@ -196,9 +215,19 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
                     camX += 10;
             }
             break;
-        case LV_KEY_ENTER:
+        case LV_KEY_FUC:
             /* code */
-
+            if (obj == ledC)
+                lv_group_focus_next(appGroup);
+            else if (obj == btnExit)
+            {
+                pageSwitch(5, 1);
+            }
+            else if (obj == btnSave)
+            {
+                // save in flash
+                lv_group_focus_next(appGroup);
+            }
             break;
 
         default:

@@ -46,6 +46,10 @@ u8 pressJudg_R(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
     {
         // HAL_Delay(10);
         // if(HAL_GPIO_ReadPin(GPIOx, GPIO_Pin) == GPIO_PIN_SET)
+        while(HAL_GPIO_ReadPin(GPIOx, GPIO_Pin) == GPIO_PIN_RESET)
+        {
+            lv_task_handler();
+        }
             return 1;
         // }
         // return 0;

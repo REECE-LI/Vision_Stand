@@ -104,16 +104,17 @@ void pageSwitch(u8 idFrom, u8 idTo)
     }
     else
     {
-//        if (idTo == 3)
-//        {
-//            creatTitle(pagesApp[idTo].name, offSetX_defult_T - offSetX_offset_T, offSetY_defult_T);
-//            creatImg(pagesApp[idTo].src_img, offSetX_defult_I - offSetX_offset_I, offSetY_defult_I - 20);
-//            realXT = offSetX_defult_T - offSetX_offset_T;
-//            realXI = offSetX_defult_I - offSetX_offset_I;
-//            realYT = offSetY_defult_T;
-//            realYI = offSetY_defult_I - 20;
-//        }
-//        else
+        // 本来想写一个动画的 但是 怕内存不够 不写了 就这么着吧
+    //    if (idFrom == 5)
+    //    {
+    //        creatTitle(pagesApp[idTo].name, offSetX_defult_T , offSetY_defult_T + offSetX_offset_T);
+    //        creatImg(pagesApp[idTo].src_img, offSetX_defult_I , offSetY_defult_I - offSetX_offset_I);
+    //        realXT = offSetX_defult_T;
+    //        realXI = offSetX_defult_I;
+    //        realYT = offSetY_defult_T + offSetX_offset_T;
+    //        realYI = offSetY_defult_I - offSetX_offset_I;
+    //    }
+    //    else
         {
             creatTitle(pagesApp[idTo].name, offSetX_defult_T - offSetX_offset_T, offSetY_defult_T);
             creatImg(pagesApp[idTo].src_img, offSetX_defult_I - offSetX_offset_I, offSetY_defult_I);
@@ -125,6 +126,8 @@ void pageSwitch(u8 idFrom, u8 idTo)
     }
     lv_anim_set_exec_cb(&logoShow, (lv_anim_exec_xcb_t)ex_align_I);
     lv_anim_set_exec_cb(&titleShow, (lv_anim_exec_xcb_t)ex_align_T);
+    // lv_anim_set_exec_cb(&logoShow, (lv_anim_exec_xcb_t)ex_align_I);
+    // lv_anim_set_exec_cb(&titleShow, (lv_anim_exec_xcb_t)ex_align_T);
     lv_anim_set_var(&logoShow, imgLogo);
     lv_anim_set_var(&titleShow, labelTitle);
     lv_anim_set_time(&titleShow, 300);
