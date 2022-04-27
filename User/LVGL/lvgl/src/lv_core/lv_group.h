@@ -30,7 +30,7 @@ enum {
     LV_KEY_ESC       = 27,  /*0x1B*/
     LV_KEY_DEL       = 127, /*0x7F*/
     LV_KEY_BACKSPACE = 8,   /*0x08*/
-    LV_KEY_ENTER     = 10,  /*0x0A, '\n'*/
+    LV_KEY_ENTER     = 10,  /*0x0A, '\n'， 10*/ 
     LV_KEY_NEXT      = 9,   /*0x09, '\t'*/
     LV_KEY_PREV      = 11,  /*0x0B, '*/
     LV_KEY_HOME      = 2,   /*0x02, STX*/

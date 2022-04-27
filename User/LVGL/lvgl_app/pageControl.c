@@ -269,12 +269,19 @@ static void savePos(void)
 #endif
     // 创建一个文本框显示 输入的内容
     ta = lv_textarea_create(appWindow, NULL);
-    lv_obj_align(ta, NULL, LV_ALIGN_IN_TOP_MID, 0, LV_DPI);
+    lv_obj_align(ta, NULL, LV_ALIGN_IN_TOP_MID, 0, 40);
+    lv_obj_set_style_local_border_width(ta, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 2);
+    // lv_obj_set_style_local_border_width(ta, LV_STATE_DEFAULT, LV_STATE_DEFAULT, 2);
     lv_obj_set_event_cb(ta, ta_event_cb);
     lv_textarea_set_text(ta, "");
     lv_coord_t max_h = LV_VER_RES / 2 - LV_DPI / 2;
     if (lv_obj_get_height(ta) > max_h)
         lv_obj_set_height(ta, max_h);
+#if 0
+    // 将文本框加入group中 
+    // 别加了 加了 会出事！！！
+    lv_group_add_obj(appGroup, ta);
+#endif
     // 创建键盘
     kb_create();
 }
@@ -288,27 +295,47 @@ static void kb_create(void)
     lv_obj_set_event_cb(kb, kb_event_cb);
     // 显示输入的文本框
     lv_keyboard_set_textarea(kb, ta);
-    
+
+    // 尝试将键盘加入进组 提问？ 清屏之后 之前的组还在了吗?
+    // 默认不在了 尝试 成功！！！！牛逼 但是边框太小了 我都看不清
+    lv_group_add_obj(appGroup, kb);
+    lv_group_set_editing(appGroup, true); // 还是要确认为编辑模式
+// 这里尝试将边框的宽度修改一下 并且修改一下颜色 红色的 尽显高级质感
+#if 0 // 可惜 修改无效
+    lv_obj_set_style_local_border_color(kb, LV_STATE_DEFAULT, LV_STATE_HOVERED, LV_COLOR_RED);
+    lv_obj_set_style_local_border_width(kb, LV_STATE_DEFAULT, LV_STATE_HOVERED, 2); // 宽度 没必要大 gogogo
+#endif
 }
 
 static void kb_event_cb(lv_obj_t *keyboard, lv_event_t e)
 {
     // woc 这尼玛的 怎么用摇杆控制 我人杀了呀
     // 日你妈逼的 操
-    lv_keyboard_def_event_cb(kb, e);
+    // 我日尼玛的哦 还要进这个函数 套娃？？？
+    // 日你妈的 这个函数看不懂 改外面的参数！！！！ 操
+
     if (e == LV_EVENT_CANCEL)
     {
         lv_keyboard_set_textarea(kb, NULL);
         lv_obj_del(kb);
         kb = NULL;
     }
+    else if (e == LV_KEY_FUC)
+    {
+        e = LV_EVENT_VALUE_CHANGED;
+    }
+    // lv_keyboard_def_event_cb(kb, e);
 }
 
 static void ta_event_cb(lv_obj_t *ta_local, lv_event_t e)
 {
     if (e == LV_EVENT_CLICKED && kb == NULL)
     {
-        // 用刷新键盘的检测输入的内容 显示在文件上
+        // 键盘出现
         kb_create();
+    }
+    else
+    {
+        lv_group_focus_next(appGroup);
     }
 }
