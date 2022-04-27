@@ -8,7 +8,7 @@
 #define _CONFIG_H
 
 #ifndef LVGL_RUN
-#define LVGL_RUN 1
+#define LVGL_RUN 0
 #endif
 
 
