@@ -7,10 +7,12 @@
 #include "rocker.h"
 #include "key.h"
 #include "main.h"
+#include "stdio.h"
+#include "math.h"
 
 
-extern u8 plusX;
-extern u8 plusZ;
+extern u16 plusX;
+extern u16 plusZ;
 
 /**
  * @Name: modeJude
@@ -54,9 +56,9 @@ void getAd(void)
     ady = ady / 3.3 * 240;
 #endif
 
-#if 0
-    LCD_ShowFloatNum1(0, 0, adx, 5, BLACK, WHITE, 16);
-    LCD_ShowFloatNum1(0, 20, ady, 5, BLACK, WHITE, 16);
+#if  !LVGL_RUN
+    LCD_ShowFloatNum1(0, 0, adx, 10, BLACK, WHITE, 16);
+    LCD_ShowFloatNum1(0, 20, ady, 10, BLACK, WHITE, 16);
 
 //    screenSite.x_last = screenSite.x_now;
 //    screenSite.y_last = screenSite.y_now;
@@ -64,10 +66,26 @@ void getAd(void)
 //    screenSite.y_now = ady;
 //    LCD_DrawLine(screenSite.x_last, screenSite.y_last, screenSite.x_now, screenSite.y_now, RED);
 #endif
+
     screenSite.x_last = screenSite.x_now;
     screenSite.y_last = screenSite.y_now;
     screenSite.x_now = adx;
     screenSite.y_now = ady;
+
+// 步进电机速度的控制？ 改变占空比有用吗？
+if (adx > 135)
+{
+	plusX = 100-(adx-140)*0.9;
+}
+else if (adx < 105)
+{
+	plusX = 100 -(105-adx)*0.9;
+}
+#if !LVGL_RUN
+LCD_ShowIntNum(0, 40, plusX, 4, BLACK, WHITE, 16);
+#endif
+    
+
 }
 
 /**
@@ -139,7 +157,7 @@ void doSth(void)
         break;
     default:
         LCD_ShowIntNum(120, 120, 0, 1, BLACK, WHITE, 16);
-				
+				plusX = 0;
         break;
     }
 }

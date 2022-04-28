@@ -61,8 +61,8 @@
 
 /* USER CODE BEGIN PV */
 u32 ADC_Value[50];
-u8 plusX;
-u8 plusZ;
+u16 plusX;
+u16 plusZ;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -124,12 +124,13 @@ int main(void)
 #endif
 
   // printf("OK");
-	plusX = 0;
-	plusZ = 0;
+	plusX = 499;
+	plusZ = 499;
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
 	//HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
 	 HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 	  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
+		
   HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&ADC_Value, 50);
   // LCD_ShowPicture(0,0,240,240,gImage_we);
 
@@ -154,7 +155,10 @@ int main(void)
     HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
 	#endif
 #else
-		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, plusX);
+			//__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, plusX);
+		if (plusX > 4)
+		htim3.Instance->PSC = plusX;
+		
 #endif
 
     /* USER CODE END WHILE */
@@ -217,6 +221,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 #else
     getAd();
     doSth();
+		
 #endif
   }
 }
