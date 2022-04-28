@@ -10,7 +10,7 @@
       <TargetName>ADC_F4_TEST</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -185,11 +185,10 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
             <RvdsMve>0</RvdsMve>
-            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -339,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F411xE</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;                    ../Drivers/STM32F4xx_HAL_Driver/Inc;                    ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;                    ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;                    ../Drivers/CMSIS/Include;                    ..\User\LCD;                    ..\User\ROCKER;                    ..\User\LVGL;                    ..\User\LVGL\lvgl_driver;                    ..\User\LVGL\lvgl;                    ..\User\KEY;                    ..\User\LVGL\lvgl_app;                    ..\User</IncludePath>
+              <IncludePath>../Core/Inc;                                   ../Drivers/STM32F4xx_HAL_Driver/Inc;                                   ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;                                   ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;                                   ../Drivers/CMSIS/Include;                                   ..\User\LCD;                                   ..\User\ROCKER;                                   ..\User\LVGL;                                   ..\User\LVGL\lvgl_driver;                                   ..\User\LVGL\lvgl;                                   ..\User\KEY;                                   ..\User\LVGL\lvgl_app;                                   ..\User</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -352,7 +351,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>1</ClangAsOpt>
+            <uClangAs>0</uClangAs>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -1866,14 +1865,5 @@
     </components>
     <files/>
   </RTE>
-
-  <LayerInfo>
-    <Layers>
-      <Layer>
-        <LayName>ADC_F4_TEST</LayName>
-        <LayPrjMark>1</LayPrjMark>
-      </Layer>
-    </Layers>
-  </LayerInfo>
 
 </Project>

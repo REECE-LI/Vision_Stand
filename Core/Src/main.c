@@ -28,6 +28,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
+#include "stm32f4xx_hal_tim.h"
 #include "config.h"
 #include "lcd_init.h"
 #include "lcd.h"
@@ -59,6 +61,8 @@
 
 /* USER CODE BEGIN PV */
 u32 ADC_Value[50];
+u8 plusX;
+u8 plusZ;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -105,6 +109,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_SPI1_Init();
   MX_TIM3_Init();
+  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
 
 #if (LVGL_RUN == 1)
@@ -115,11 +120,16 @@ int main(void)
 #else
   LCD_Init();
   LCD_Fill(0, 0, 240, 240, WHITE);
-  HAL_Delay(1000);
+   HAL_Delay(1000);
 #endif
 
   // printf("OK");
+	plusX = 0;
+	plusZ = 0;
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+	//HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
+	 HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+	  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
   HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&ADC_Value, 50);
   // LCD_ShowPicture(0,0,240,240,gImage_we);
 
@@ -133,20 +143,18 @@ int main(void)
   startUp();
 
 #endif
-  HAL_TIM_Base_Start_IT(&htim3);
+   HAL_TIM_Base_Start_IT(&htim3);
   while (1)
   {
     // 只是为了看一下CPU正真的利用率
-#if 1
-    HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
-#endif
+
 #if LVGL_RUN
     lv_task_handler();
+		#if 1
+    HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
+	#endif
 #else
-
-    // LCD_ShowPicture(0,0,240,240,(u8*)gImage_1);
-//		getAd();
-//    doSth();
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, plusX);
 #endif
 
     /* USER CODE END WHILE */

@@ -70,6 +70,14 @@ void Error_Handler(void);
 #define RES_GPIO_Port GPIOB
 #define DC_Pin GPIO_PIN_1
 #define DC_GPIO_Port GPIOB
+#define xDir_Pin GPIO_PIN_15
+#define xDir_GPIO_Port GPIOB
+#define xStep_Pin GPIO_PIN_8
+#define xStep_GPIO_Port GPIOA
+#define Ztep_Pin GPIO_PIN_11
+#define Ztep_GPIO_Port GPIOA
+#define zDir_Pin GPIO_PIN_12
+#define zDir_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
 typedef   uint32_t   u32;   
 typedef   uint16_t   u16;  

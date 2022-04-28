@@ -14,3 +14,9 @@
   + something I wanna to say to this university
 
 #### 关于保存设置 本来打算 使用keyboard组件 但是控件面积太小了 不适用 所以使用BTN按键直接保存 SITE1~4
+
+
+## 步进电机的控制
+
++ PA11(zStep)_PA12(zDir)
++ PA8(xStep)_PB15(xDdir)

@@ -8,6 +8,10 @@
 #include "key.h"
 #include "main.h"
 
+
+extern u8 plusX;
+extern u8 plusZ;
+
 /**
  * @Name: modeJude
  * @Description: 摇杆模式
@@ -111,9 +115,11 @@ void doSth(void)
         LCD_ShowIntNum(120, 120, 2, 1, BLACK, WHITE, 16);
         break;
     case left:
+				HAL_GPIO_WritePin(xDir_GPIO_Port, xDir_Pin, GPIO_PIN_RESET);
         LCD_ShowIntNum(120, 120, 3, 1, BLACK, WHITE, 16);
         break;
     case right:
+				HAL_GPIO_WritePin(xDir_GPIO_Port, xDir_Pin, GPIO_PIN_SET);
         LCD_ShowIntNum(120, 120, 4, 1, BLACK, WHITE, 16);
         break;
     case up_left:
@@ -133,6 +139,7 @@ void doSth(void)
         break;
     default:
         LCD_ShowIntNum(120, 120, 0, 1, BLACK, WHITE, 16);
+				
         break;
     }
 }
