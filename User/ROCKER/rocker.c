@@ -11,9 +11,9 @@
 #include "math.h"
 
 
-extern u16 plusX;
-extern u16 plusZ;
-
+extern u16 pscX;
+extern u16 pscZ;
+extern TIM_HandleTypeDef htim1;
 /**
  * @Name: modeJude
  * @Description: 摇杆模式
@@ -56,7 +56,7 @@ void getAd(void)
     ady = ady / 3.3 * 240;
 #endif
 
-#if  !LVGL_RUN
+#if  0
     LCD_ShowFloatNum1(0, 0, adx, 10, BLACK, WHITE, 16);
     LCD_ShowFloatNum1(0, 20, ady, 10, BLACK, WHITE, 16);
 
@@ -73,15 +73,8 @@ void getAd(void)
     screenSite.y_now = ady;
 
 // 步进电机速度的控制？ 改变占空比有用吗？
-if (adx > 135)
-{
-	plusX = 100-(adx-140)*0.9;
-}
-else if (adx < 105)
-{
-	plusX = 100 -(105-adx)*0.9;
-}
-#if !LVGL_RUN
+
+#if 0
 LCD_ShowIntNum(0, 40, plusX, 4, BLACK, WHITE, 16);
 #endif
     
@@ -101,9 +94,21 @@ dir_t keyDir(void)
     P = pressJudg_R(PRESS_GPIO_Port, PRESS_Pin);
     if (P) return press;
     if (screenSite.x_now < MIDDLE - SWITCHJUDG && screenSite.y_now > MIDDLE - DRIFT && screenSite.y_now < MIDDLE + DRIFT)
-        return left;
+		{
+ 			pscX = 1000 - (122-screenSite.x_now)*7;
+            LCD_ShowIntNum(0, 40, pscX, 3, BLACK, WHITE, 16);
+			// __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,499);
+			return left;
+		}
+        
     else if (screenSite.x_now > MIDDLE + SWITCHJUDG && screenSite.y_now > MIDDLE - DRIFT && screenSite.y_now < MIDDLE + DRIFT)
-        return right;
+		{
+			pscX = 1000 - (screenSite.x_now-122)*7;
+            LCD_ShowIntNum(0, 40, pscX, 3, BLACK, WHITE, 16);
+			// __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,499);
+			return right;
+		}
+        
     else if (screenSite.x_now < MIDDLE + DRIFT && screenSite.x_now > MIDDLE - DRIFT && screenSite.y_now < MIDDLE - SWITCHJUDG)
         return up;
     else if (screenSite.x_now < MIDDLE + DRIFT && screenSite.x_now > MIDDLE - DRIFT && screenSite.y_now > MIDDLE + SWITCHJUDG)
@@ -157,7 +162,8 @@ void doSth(void)
         break;
     default:
         LCD_ShowIntNum(120, 120, 0, 1, BLACK, WHITE, 16);
-				plusX = 0;
+		// __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,0);
+				// plusX = 0;
         break;
     }
 }

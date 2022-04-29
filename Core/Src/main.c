@@ -61,8 +61,9 @@
 
 /* USER CODE BEGIN PV */
 u32 ADC_Value[50];
-u16 plusX;
-u16 plusZ;
+u16 pscX;
+u16 pscZ;
+u8 tl;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -77,9 +78,9 @@ void SystemClock_Config(void);
 /* USER CODE END 0 */
 
 /**
-  * @brief  The application entry point.
-  * @retval int
-  */
+ * @brief  The application entry point.
+ * @retval int
+ */
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -112,25 +113,25 @@ int main(void)
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
 
-#if (LVGL_RUN == 1)
+#if LVGL_RUN
   lv_init();
   lv_port_disp_init();  // 显示器初始化
   lv_port_indev_init(); //
-
 #else
   LCD_Init();
   LCD_Fill(0, 0, 240, 240, WHITE);
-   HAL_Delay(1000);
+  HAL_Delay(1000);
 #endif
 
   // printf("OK");
-	plusX = 499;
-	plusZ = 499;
+  tl = 0;
+  pscX = 499;
+  pscZ = 499;
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
-	//HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
-	 HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-	  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
-		
+  // HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
+
   HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&ADC_Value, 50);
   // LCD_ShowPicture(0,0,240,240,gImage_we);
 
@@ -142,23 +143,24 @@ int main(void)
 
 #if LVGL_RUN
   startUp();
-
 #endif
-   HAL_TIM_Base_Start_IT(&htim3);
+  HAL_TIM_Base_Start_IT(&htim3);
   while (1)
   {
     // 只是为了看一下CPU正真的利用率
 
 #if LVGL_RUN
     lv_task_handler();
-		#if 1
+#if 1
     HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
-	#endif
+#endif
 #else
-			//__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, plusX);
-		if (plusX > 4)
-		htim3.Instance->PSC = plusX;
-		
+
+    __HAL_TIM_SET_PRESCALER(&htim1, pscX);
+    // __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,plusX);
+		// 检测是否进入WHILE循环 预编译出问题时 WHILE循环无法进入
+    // LCD_ShowIntNum(0, 20, tl++, 4, BLACK, WHITE, 16); //__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, plusX);
+
 #endif
 
     /* USER CODE END WHILE */
@@ -169,21 +171,21 @@ int main(void)
 }
 
 /**
-  * @brief System Clock Configuration
-  * @retval None
-  */
+ * @brief System Clock Configuration
+ * @retval None
+ */
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
   /** Configure the main internal regulator output voltage
-  */
+   */
   __HAL_RCC_PWR_CLK_ENABLE();
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
   /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
+   * in the RCC_OscInitTypeDef structure.
+   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
@@ -197,9 +199,8 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+   */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
@@ -221,16 +222,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 #else
     getAd();
     doSth();
-		
+
 #endif
   }
 }
 /* USER CODE END 4 */
 
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
+ * @brief  This function is executed in case of error occurrence.
+ * @retval None
+ */
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
@@ -242,14 +243,14 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
+ * @brief  Reports the name of the source file and the source line number
+ *         where the assert_param error has occurred.
+ * @param  file: pointer to the source file name
+ * @param  line: assert_param error line source number
+ * @retval None
+ */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
