@@ -95,16 +95,16 @@ dir_t keyDir(void)
     if (P) return press;
     if (screenSite.x_now < MIDDLE - SWITCHJUDG && screenSite.y_now > MIDDLE - DRIFT && screenSite.y_now < MIDDLE + DRIFT)
 		{
- 			pscX = 1000 - (122-screenSite.x_now)*7;
-            LCD_ShowIntNum(0, 40, pscX, 3, BLACK, WHITE, 16);
+ 			pscX = (u16)(100 + screenSite.x_now*7.5);
+      //LCD_ShowIntNum(0, 40, pscX, 3, BLACK, WHITE, 16);
 			// __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,499);
 			return left;
 		}
         
     else if (screenSite.x_now > MIDDLE + SWITCHJUDG && screenSite.y_now > MIDDLE - DRIFT && screenSite.y_now < MIDDLE + DRIFT)
 		{
-			pscX = 1000 - (screenSite.x_now-122)*7;
-            LCD_ShowIntNum(0, 40, pscX, 3, BLACK, WHITE, 16);
+			pscX = (u16)(1900 - screenSite.x_now*7.5);
+      //LCD_ShowIntNum(0, 40, pscX, 3, BLACK, WHITE, 16);
 			// __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,499);
 			return right;
 		}

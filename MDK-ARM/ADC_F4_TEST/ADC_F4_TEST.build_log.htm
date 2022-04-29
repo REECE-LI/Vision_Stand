@@ -40,11 +40,15 @@ compiling rocker.c...
       u8 x, y;
 ..\User\ROCKER\rocker.c(39): warning:  #177-D: variable "y"  was declared but never referenced
       u8 x, y;
-..\User\ROCKER\rocker.c: 6 warnings, 0 errors
+..\User\ROCKER\rocker.c(98): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+   			pscX = (u16)(100 + screenSite.x_now*7.5);
+..\User\ROCKER\rocker.c(106): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  			pscX = (u16)(1900 - screenSite.x_now*7.5);
+..\User\ROCKER\rocker.c: 8 warnings, 0 errors
 linking...
-Program Size: Code=17994 RO-data=13774 RW-data=112 ZI-data=35576  
+Program Size: Code=18962 RO-data=13774 RW-data=112 ZI-data=35576  
 FromELF: creating hex file...
-"ADC_F4_TEST\ADC_F4_TEST.axf" - 0 Error(s), 6 Warning(s).
+"ADC_F4_TEST\ADC_F4_TEST.axf" - 0 Error(s), 8 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -68,7 +72,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.5.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:06
+Build Time Elapsed:  00:00:07
 </pre>
 </body>
 </html>
