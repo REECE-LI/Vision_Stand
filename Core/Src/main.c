@@ -155,11 +155,11 @@ int main(void)
     HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
 #endif
 #else
-
-//    __HAL_TIM_SET_PRESCALER(&htim1, pscX);
+	// 进行频率分频的调节
+   __HAL_TIM_SET_PRESCALER(&htim1, pscX);
 //    // __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,plusX);
-//		// 检测是否进入WHILE循环 预编译出问题时 WHILE循环无法进入
-//   LCD_ShowIntNum(0, 20, tl++, 4, BLACK, WHITE, 16); //__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, plusX);
+		// 检测是否进入WHILE循环 预编译出问题时 WHILE循环无法进入
+   LCD_ShowIntNum(0, 20, tl++, 3, BLACK, WHITE, 16); //__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, plusX);
 
 #endif
 

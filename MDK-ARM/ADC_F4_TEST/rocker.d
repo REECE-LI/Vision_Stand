@@ -39,4 +39,4 @@ adc_f4_test\rocker.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 adc_f4_test\rocker.o: ..\User\LCD\lcd.h
 adc_f4_test\rocker.o: ..\User\KEY\key.h
 adc_f4_test\rocker.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-adc_f4_test\rocker.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+adc_f4_test\rocker.o: ..\User\config.h
