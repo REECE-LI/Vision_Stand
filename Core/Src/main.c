@@ -150,7 +150,6 @@ int main(void)
   while (1)
   {
     // 只是为了看一下CPU正真的利用率
-
 #if LVGL_RUN
     lv_task_handler();
 #if 1
