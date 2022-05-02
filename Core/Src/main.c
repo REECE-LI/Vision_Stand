@@ -41,6 +41,7 @@
 #include "lv_port_indev.h"
 #include "testApp.h"
 #include "startUp.h"
+#include "Motor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -131,7 +132,8 @@ int main(void)
   // HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
-
+  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
   HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&ADC_Value, 50);
   // LCD_ShowPicture(0,0,240,240,gImage_we);
 
@@ -154,12 +156,18 @@ int main(void)
 #if 1
     HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
 #endif
+    getAd();
+    if (!keyDir())
+    {
+      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
+    }
 #else
-	// 进行频率分频的调节
-   __HAL_TIM_SET_PRESCALER(&htim1, pscX);
-//    // __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,plusX);
-		// 检测是否进入WHILE循环 预编译出问题时 WHILE循环无法进入
-   LCD_ShowIntNum(0, 20, tl++, 3, BLACK, WHITE, 16); //__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, plusX);
+    // 进行频率分频的调节
+    // __HAL_TIM_SET_PRESCALER(&htim1, pscX);
+    //    // __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,plusX);
+    // 检测是否进入WHILE循环 预编译出问题时 WHILE循环无法进入
+    LCD_ShowIntNum(0, 20, tl++, 3, BLACK, WHITE, 16); //__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, plusX);
 
 #endif
 
@@ -220,8 +228,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 #if LVGL_RUN
     lv_tick_inc(1);
 #else
+
     getAd();
-    doSth();
+    controlMotor();
+    //    doSth();
 
 #endif
   }

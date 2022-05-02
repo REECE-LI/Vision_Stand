@@ -9,6 +9,7 @@
 #include "config.h"
 #include "page.h"
 #include "usart.h"
+#include "motor.h"
 
 static void savePos(void);
 static void event_callback(lv_obj_t *obj, lv_event_t event);
@@ -18,6 +19,11 @@ static lv_obj_t *btnPos2;
 static lv_obj_t *btnPos3;
 static lv_obj_t *btnPos4;
 
+extern u16 pscX;
+extern u16 pscZ;
+extern TIM_HandleTypeDef htim1;
+
+extern Site screenSite;
 /**
  * @Name: pageControl
  * @Description: 这个函数只会进入一次 之后的app页面处理函数另外写
@@ -140,8 +146,10 @@ void appControl(void)
 
 static void event_callback(lv_obj_t *obj, lv_event_t event)
 {
+
     if (event == LV_EVENT_KEY)
     {
+        // controlMotor();
         // HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
         // static u8 ID = 1;
         const u32 *key = lv_event_get_data();
@@ -152,7 +160,17 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             if (obj == ledC)
             {
                 if (camY < 130)
+                {
                     camY += 10;
+                    // 选择轴向 控制方向
+                    switchDir(1, 1);
+                    // 调节轴向电机开关
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
+                    //设置频率 调节速度
+                    pscZ = (u16)(100 + screenSite.y_now * 7.5);
+                    __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
+                }
             }
             else
                 lv_group_focus_prev(appGroup);
@@ -162,7 +180,14 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             if (obj == ledC)
             {
                 if (camY > 0)
+                {
                     camY -= 10;
+                    switchDir(1, 0);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
+                    pscZ = (u16)(1900 - screenSite.y_now * 7.5);
+                    __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
+                }
             }
             else
                 lv_group_focus_next(appGroup);
@@ -172,7 +197,14 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             if (obj == ledC)
             {
                 if (camX < 110)
+                {
                     camX += 10;
+                    switchDir(0, 0);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
+                    pscX = (u16)(100 + screenSite.x_now * 7.5);
+                    __HAL_TIM_SET_PRESCALER(&htim1, pscX);
+                }
             }
             else
                 lv_group_focus_prev(appGroup);
@@ -181,9 +213,15 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             /* code */
             if (obj == ledC)
             {
-
                 if (camX > 0)
+                {
                     camX -= 10;
+                    switchDir(0, 1);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
+                    pscX = (u16)(1900 - screenSite.x_now * 7.5);
+                    __HAL_TIM_SET_PRESCALER(&htim1, pscX);
+                }
             }
             else
                 lv_group_focus_next(appGroup);
@@ -193,9 +231,27 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             if (obj == ledC)
             {
                 if (camY < 130)
+                {
                     camY += 10;
+                    // 选择轴向 控制方向
+                    switchDir(1, 1);
+                    // 调节轴向电机开关
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
+                    //设置频率 调节速度
+                    pscZ = (u16)(100 + screenSite.y_now * 7.5);
+                    __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
+                }
+
                 if (camX < 110)
+                {
                     camX += 10;
+                    switchDir(0, 0);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
+                    pscX = (u16)(100 + screenSite.x_now * 7.5);
+                    __HAL_TIM_SET_PRESCALER(&htim1, pscX);
+                }
             }
             break;
         case LV_KEY_UP_RIGHT:
@@ -203,9 +259,27 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             if (obj == ledC)
             {
                 if (camY < 130)
+                {
                     camY += 10;
+                    // 选择轴向 控制方向
+                    switchDir(1, 1);
+                    // 调节轴向电机开关
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
+                    //设置频率 调节速度
+                    pscZ = (u16)(100 + screenSite.y_now * 7.5);
+                    __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
+                }
+
                 if (camX > 0)
+                {
                     camX -= 10;
+                    switchDir(0, 1);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
+                    pscX = (u16)(1900 - screenSite.x_now * 7.5);
+                    __HAL_TIM_SET_PRESCALER(&htim1, pscX);
+                }
             }
             break;
         case LV_KEY_DOWN_RIGHT:
@@ -213,9 +287,24 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             if (obj == ledC)
             {
                 if (camY > 0)
+                {
                     camY -= 10;
+                    switchDir(1, 0);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
+                    pscZ = (u16)(1900 - screenSite.y_now * 7.5);
+                    __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
+                }
+
                 if (camX > 0)
+                {
                     camX -= 10;
+                    switchDir(0, 1);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
+                    pscX = (u16)(1900 - screenSite.x_now * 7.5);
+                    __HAL_TIM_SET_PRESCALER(&htim1, pscX);
+                }
             }
             break;
         case LV_KEY_DOWN_LEFT:
@@ -223,15 +312,32 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             if (obj == ledC)
             {
                 if (camY > 0)
+                {
                     camY -= 10;
+                    switchDir(1, 0);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
+                    pscZ = (u16)(1900 - screenSite.y_now * 7.5);
+                    __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
+                }
                 if (camX < 110)
+                {
                     camX += 10;
+                    switchDir(0, 0);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
+                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
+                    pscX = (u16)(100 + screenSite.x_now * 7.5);
+                    __HAL_TIM_SET_PRESCALER(&htim1, pscX);
+                }
             }
             break;
         case LV_KEY_FUC:
             /* code */
             if (obj == ledC)
+            {
                 lv_group_focus_next(appGroup);
+            }
+
             else if (obj == btnExit)
             {
                 pageSwitch(5, 1);
@@ -247,14 +353,20 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             }
             else if (obj == btnPos1 || obj == btnPos2 || obj == btnPos3 || obj == btnPos4)
             {
-                 pageSwitch(5, 1);
+                pageSwitch(5, 1);
             }
 
             break;
-
+        case LV_KEY_DEL:
+            __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+            __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
+            break;
         default:
+            __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+            __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
             break;
         }
+
         if (obj == ledC)
         {
             lv_obj_set_pos(ledC, 110 - camX, 130 - camY);

@@ -322,6 +322,10 @@ static bool keypad_read(lv_indev_drv_t *indev_drv, lv_indev_data_t *data)
         case down_left:
             act_key = LV_KEY_DOWN_LEFT;
             break;
+				 case middle:
+            act_key = LV_KEY_DEL;
+            break;
+				
         }
 
         last_key = act_key;

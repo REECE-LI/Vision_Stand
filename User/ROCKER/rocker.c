@@ -136,40 +136,41 @@ void doSth(void)
     switch (keyDir())
     {
     case up:
-        LCD_ShowIntNum(120, 120, 1, 1, BLACK, WHITE, 16);
+        //LCD_ShowIntNum(120, 120, 1, 1, BLACK, WHITE, 16);
         break;
     case down:
-        LCD_ShowIntNum(120, 120, 2, 1, BLACK, WHITE, 16);
+        //LCD_ShowIntNum(120, 120, 2, 1, BLACK, WHITE, 16);
         break;
     case left:
-         HAL_GPIO_WritePin(xDir_GPIO_Port, xDir_Pin, GPIO_PIN_RESET);
-        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
-        LCD_ShowIntNum(120, 120, 3, 1, BLACK, WHITE, 16);
+        // HAL_GPIO_WritePin(xDir_GPIO_Port, xDir_Pin, GPIO_PIN_RESET);
+//        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
+//        LCD_ShowIntNum(120, 120, 3, 1, BLACK, WHITE, 16);
         break;
     case right:
-         HAL_GPIO_WritePin(xDir_GPIO_Port, xDir_Pin, GPIO_PIN_SET);
-        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
-        LCD_ShowIntNum(120, 120, 4, 1, BLACK, WHITE, 16);
+//                  HAL_GPIO_WritePin(xDir_GPIO_Port, xDir_Pin, GPIO_PIN_SET);
+//        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
+//        LCD_ShowIntNum(120, 120, 4, 1, BLACK, WHITE, 16);
         break;
     case up_left:
-        LCD_ShowIntNum(120, 120, 5, 1, BLACK, WHITE, 16);
+        //LCD_ShowIntNum(120, 120, 5, 1, BLACK, WHITE, 16);
         break;
     case up_right:
-        LCD_ShowIntNum(120, 120, 6, 1, BLACK, WHITE, 16);
+        //LCD_ShowIntNum(120, 120, 6, 1, BLACK, WHITE, 16);
         break;
     case down_right:
-        LCD_ShowIntNum(120, 120, 7, 1, BLACK, WHITE, 16);
+        //LCD_ShowIntNum(120, 120, 7, 1, BLACK, WHITE, 16);
         break;
     case down_left:
-        LCD_ShowIntNum(120, 120, 8, 1, BLACK, WHITE, 16);
+        //LCD_ShowIntNum(120, 120, 8, 1, BLACK, WHITE, 16);
         break;
     case press:
-        LCD_ShowIntNum(120, 120, 9, 1, BLACK, WHITE, 16);
+        //LCD_ShowIntNum(120, 120, 9, 1, BLACK, WHITE, 16);
         break;
     default:
-        LCD_ShowIntNum(120, 120, 0, 1, BLACK, WHITE, 16);
+        //LCD_ShowIntNum(120, 120, 0, 1, BLACK, WHITE, 16);
         // 直接设置占空比为0 中位时停止 转动
         __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
 
         break;
     }

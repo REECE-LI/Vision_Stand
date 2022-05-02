@@ -129,3 +129,6 @@ adc_f4_test\pagecontrol.o: ..\User\config.h
 adc_f4_test\pagecontrol.o: ..\User\LVGL\lvgl_app\page.h
 adc_f4_test\pagecontrol.o: ../Core/Inc/usart.h
 adc_f4_test\pagecontrol.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+adc_f4_test\pagecontrol.o: ..\User\MOTOR\motor.h
+adc_f4_test\pagecontrol.o: ..\User\ROCKER\rocker.h
+adc_f4_test\pagecontrol.o: ..\User\LCD\lcd.h

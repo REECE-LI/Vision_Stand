@@ -142,3 +142,4 @@ adc_f4_test\main.o: ..\User\LCD\lcd_init.h
 adc_f4_test\main.o: ..\User\LVGL\lvgl_driver\lv_port_indev.h
 adc_f4_test\main.o: ..\User\LVGL\lvgl_app\testApp.h
 adc_f4_test\main.o: ..\User\LVGL\lvgl_app\startUp.h
+adc_f4_test\main.o: ..\User\MOTOR\Motor.h
