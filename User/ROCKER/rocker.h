@@ -14,14 +14,12 @@
 #define MIDDLE 120
 #define SWITCHJUDG 40
 
-typedef enum  
-{
+typedef enum {
     linear,         //线性
     noLinear,        //非线性
 } mode_t;
 
-typedef enum 
-{
+typedef enum {
     middle,
     up,
     down,
@@ -32,15 +30,14 @@ typedef enum
     down_right,
     down_left,
     press,
-    
+
 } dir_t;
 
-typedef struct
-{
-   float x_now;
-   float y_now;
-   float x_last;
-   float y_last;
+typedef struct {
+    float x_now;
+    float y_now;
+    float x_last;
+    float y_last;
 } Site;
 
 extern Site screenSite;
