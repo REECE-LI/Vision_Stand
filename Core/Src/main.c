@@ -16,8 +16,8 @@
  *
  ******************************************************************************
  */
-/* USER CODE END Header */
-/* Includes ------------------------------------------------------------------*/
+ /* USER CODE END Header */
+ /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
 #include "dma.h"
@@ -64,9 +64,13 @@
 u32 ADC_Value[50];
 u16 pscX;
 u16 pscZ;
-u16 tl;
-u16 pwm[1000] = {499};
+u8 tl;
+u16 zCount;
+u16 xCount;
+
+u32 pwm[5] = { 0 };
 u8 flag = 1;
+u8 pwmCount = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -84,8 +88,7 @@ void SystemClock_Config(void);
   * @brief  The application entry point.
   * @retval int
   */
-int main(void)
-{
+int main(void) {
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -125,14 +128,16 @@ int main(void)
   LCD_Fill(0, 0, 240, 240, WHITE);
   HAL_Delay(1000);
 #endif
-	 for (tl = 0; tl<100; tl++) 
-	 {
-		 pwm[tl] = 499;
-	 }
+  for (tl = 0; tl < 4; tl++) {
+    pwm[tl] = 499;
+  }
+  pwm[4] = 1000;
   // printf("OK");
   tl = 0;
   pscX = 0;
   pscZ = 0;
+  zCount = 0;
+  xCount = 0;
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   // HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
 #if 1
@@ -142,8 +147,8 @@ int main(void)
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
 #endif
-  
-   HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&ADC_Value, 50);
+
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADC_Value, 50);
   // LCD_ShowPicture(0,0,240,240,gImage_we);
 
   // DMA_Fill(0,0,240,240,(u8*)gImage_we);
@@ -155,9 +160,9 @@ int main(void)
 #if LVGL_RUN
   startUp();
 #endif
-   
-	 
-	 HAL_TIM_Base_Start_IT(&htim3);
+
+
+  HAL_TIM_Base_Start_IT(&htim3);
   while (1) {
     // 只是为了看一下CPU正真的利用率
 #if LVGL_RUN
@@ -173,9 +178,9 @@ int main(void)
 #else
    // HAL_TIM_OnePulse_Start(&htim1, TIM_CHANNEL_1);
      //__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, plusX);
-		// getAd();
-		
-		 //HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t *)pwm, 100);
+    // getAd();
+
+     //HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t *)pwm, 100);
 //  HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_4, (uint32_t *)pwm, 10);
 //    if (!keyDir()) {
 //      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
@@ -184,7 +189,7 @@ int main(void)
 //			HAL_TIM_Base_Stop_IT(&htim1);
 //    }
 
- 
+
 //   HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t *)pwm, 100);
 
 #endif
@@ -200,10 +205,9 @@ int main(void)
   * @brief System Clock Configuration
   * @retval None
   */
-void SystemClock_Config(void)
-{
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+void SystemClock_Config(void) {
+  RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
 
   /** Configure the main internal regulator output voltage
   */
@@ -220,29 +224,26 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLN = 100;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 4;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
     Error_Handler();
   }
   /** Initializes the CPU, AHB and APB buses clocks
   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
+    | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3) != HAL_OK)
-  {
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3) != HAL_OK) {
     Error_Handler();
   }
 }
 
 /* USER CODE BEGIN 4 */
 
-u32 countX = 0;
-u32 countZ = 0;
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
   if (htim->Instance == htim3.Instance) {
 #if LVGL_RUN
@@ -250,9 +251,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
 #else
 
     //getAd();
-		//doSth();
+    //doSth();
     controlMotor();
-		
+
 #if 0
     if ((__HAL_TIM_GET_COMPARE(&htim1, TIM_CHANNEL_1) == 499)) {
       countX++;
@@ -262,24 +263,32 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
     }
 #endif
 #endif
-  } 
+  }
 }
 
 
 /* 传输完一帧数据以后暂停DMA */
-void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
-{
+void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef* htim) {
+  if (flag == 0) {
+    if ((TIM_CHANNEL_STATE_GET((&htim1, TIM_CHANNEL_1)htim->Channel == HAL_TIM_CHANNEL_STATE_READY) && \
+      (htim->Channel == HAL_TIM_CHANNEL_STATE_READY)) {
+      HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
+      HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_4);
+      //		LCD_ShowIntNum(0, 20, tl++, 3, BLACK, WHITE, 16);
+      flag = 1;
+    }
+    else if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
+      HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_4);
+      //LCD_ShowIntNum(0, 20, tl++, 3, BLACK, WHITE, 16);
+      flag = 1;
+    }
+    else if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {
+      HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
+      //LCD_ShowIntNum(0, 20, tl++, 3, BLACK, WHITE, 16);
+      flag = 1;
+    }
+  }
 
-	
-	if(htim->Channel==HAL_TIM_ACTIVE_CHANNEL_1)
-	{
-		HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1); 
-		LCD_ShowIntNum(0, 20, tl++, 3, BLACK, WHITE, 16);
-		flag = 1;
-	}else if(htim->Channel==HAL_TIM_ACTIVE_CHANNEL_4)
-	{
-		HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_4);
-	}
 }
 
 
@@ -289,8 +298,7 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
   * @brief  This function is executed in case of error occurrence.
   * @retval None
   */
-void Error_Handler(void)
-{
+void Error_Handler(void) {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
@@ -307,13 +315,12 @@ void Error_Handler(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t *file, uint32_t line)
-{
+void assert_failed(uint8_t* file, uint32_t line) {
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
-}
+     /* USER CODE END 6 */
+  }
 #endif /* USE_FULL_ASSERT */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

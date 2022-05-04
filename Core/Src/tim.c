@@ -176,8 +176,8 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
     hdma_tim1_ch1.Init.Direction = DMA_PERIPH_TO_MEMORY;
     hdma_tim1_ch1.Init.PeriphInc = DMA_PINC_DISABLE;
     hdma_tim1_ch1.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_tim1_ch1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-    hdma_tim1_ch1.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
+    hdma_tim1_ch1.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+    hdma_tim1_ch1.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
     hdma_tim1_ch1.Init.Mode = DMA_NORMAL;
     hdma_tim1_ch1.Init.Priority = DMA_PRIORITY_MEDIUM;
     hdma_tim1_ch1.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
@@ -194,8 +194,8 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
     hdma_tim1_ch4_trig_com.Init.Direction = DMA_PERIPH_TO_MEMORY;
     hdma_tim1_ch4_trig_com.Init.PeriphInc = DMA_PINC_DISABLE;
     hdma_tim1_ch4_trig_com.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_tim1_ch4_trig_com.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-    hdma_tim1_ch4_trig_com.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
+    hdma_tim1_ch4_trig_com.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+    hdma_tim1_ch4_trig_com.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
     hdma_tim1_ch4_trig_com.Init.Mode = DMA_NORMAL;
     hdma_tim1_ch4_trig_com.Init.Priority = DMA_PRIORITY_MEDIUM;
     hdma_tim1_ch4_trig_com.Init.FIFOMode = DMA_FIFOMODE_DISABLE;

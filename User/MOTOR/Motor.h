@@ -10,6 +10,9 @@
 #include "main.h"
 #include "rocker.h"
 
+
+#define XMAX 1000
+#define ZMAX 3400
 void switchDir(u8 which, u8 dir);
 void controlMotor(void);
 
