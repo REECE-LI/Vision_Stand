@@ -5,7 +5,7 @@
  * @Date: 2022-04-28 17:10:04
  */
 #include "Motor.h"
-
+// #include "stm32f4xx_hal_tim.h"
 
 
 extern Site screenSite;
@@ -120,10 +120,10 @@ void controlMotor(void) {
                 LCD_ShowIntNum(0, 20, zCount++, 4, BLACK, WHITE, 16);
 #endif
                 switchDir(1, 1);
+								switchDir(0, 0);
                 pscZ = (u16)(100 + screenSite.y_now * 7.5);
-                switchDir(0, 0);
                 pscX = (u16)(100 + screenSite.x_now * 7.5);
-                __HAL_TIM_SET_PRESCALER(&htim1, (pscX + pscZ) / 2);
+                __HAL_TIM_SET_PRESCALER(&htim1, pscX);
                 HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t*)pwm, 5);
                 HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_4, (uint32_t*)pwm, 5);
                 flag = 0;
@@ -144,7 +144,7 @@ void controlMotor(void) {
                 pscZ = (u16)(100 + screenSite.y_now * 7.5);
                 switchDir(0, 1);
                 pscX = (u16)(1900 - screenSite.x_now * 7.5);
-                __HAL_TIM_SET_PRESCALER(&htim1, (pscX + pscZ) / 2);
+                __HAL_TIM_SET_PRESCALER(&htim1, pscX);
                 HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t*)pwm, 5);
                 HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_4, (uint32_t*)pwm, 5);
                 flag = 0;
@@ -164,7 +164,7 @@ void controlMotor(void) {
                 switchDir(0, 1);
                 HAL_GPIO_WritePin(xDir_GPIO_Port, xDir_Pin, GPIO_PIN_SET);
                 pscX = (u16)(1900 - screenSite.x_now * 7.5);
-                __HAL_TIM_SET_PRESCALER(&htim1, (pscX + pscZ) / 2);
+                __HAL_TIM_SET_PRESCALER(&htim1, pscX);
                 HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t*)pwm, 5);
                 HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_4, (uint32_t*)pwm, 5);
                 flag = 0;
@@ -183,7 +183,7 @@ void controlMotor(void) {
                 pscZ = (u16)(1900 - screenSite.y_now * 7.5);
                 switchDir(0, 0);
                 pscX = (u16)(100 + screenSite.x_now * 7.5);
-                __HAL_TIM_SET_PRESCALER(&htim1, (pscX + pscZ) / 2);
+                __HAL_TIM_SET_PRESCALER(&htim1, pscX);
                 HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t*)pwm, 5);
                 HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_4, (uint32_t*)pwm, 5);
                 flag = 0;

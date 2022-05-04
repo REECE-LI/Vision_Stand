@@ -68,7 +68,7 @@ u8 tl;
 u16 zCount;
 u16 xCount;
 
-u32 pwm[5] = { 0 };
+u32 pwm[10] = { 0 };
 u8 flag = 1;
 u8 pwmCount = 0;
 /* USER CODE END PV */
@@ -128,10 +128,10 @@ int main(void) {
   LCD_Fill(0, 0, 240, 240, WHITE);
   HAL_Delay(1000);
 #endif
-  for (tl = 0; tl < 4; tl++) {
+  for (tl = 0; tl < 10; tl++) {
     pwm[tl] = 499;
   }
-  pwm[4] = 1000;
+  pwm[9] = 1000;
   // printf("OK");
   tl = 0;
   pscX = 0;
@@ -270,25 +270,30 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
 /* 传输完一帧数据以后暂停DMA */
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef* htim) {
   if (flag == 0) {
-    if ((TIM_CHANNEL_STATE_GET((&htim1, TIM_CHANNEL_1)htim->Channel == HAL_TIM_CHANNEL_STATE_READY) && \
-      (htim->Channel == HAL_TIM_CHANNEL_STATE_READY)) {
+    // if ((htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) && \
+    //   (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)) {
+    //   HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
+    //   HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_4);
+    //   //		LCD_ShowIntNum(0, 20, tl++, 3, BLACK, WHITE, 16);
+    //   flag = 1;
+    // }
+    // else if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
+    //   HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_4);
+    //   //LCD_ShowIntNum(0, 20, tl++, 3, BLACK, WHITE, 16);
+    //   flag = 1;
+    // }
+    // else if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {
+    //   HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
+    //   //LCD_ShowIntNum(0, 20, tl++, 3, BLACK, WHITE, 16);
+    //   flag = 1;
+    if ((htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) || \
+       (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)) {
       HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
       HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_4);
-      //		LCD_ShowIntNum(0, 20, tl++, 3, BLACK, WHITE, 16);
       flag = 1;
     }
-    else if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
-      HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_4);
-      //LCD_ShowIntNum(0, 20, tl++, 3, BLACK, WHITE, 16);
-      flag = 1;
-    }
-    else if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {
-      HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
-      //LCD_ShowIntNum(0, 20, tl++, 3, BLACK, WHITE, 16);
-      flag = 1;
-    }
-  }
 
+  }
 }
 
 
@@ -320,7 +325,7 @@ void assert_failed(uint8_t* file, uint32_t line) {
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
      /* USER CODE END 6 */
-  }
+}
 #endif /* USE_FULL_ASSERT */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
