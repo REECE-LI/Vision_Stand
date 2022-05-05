@@ -6,7 +6,7 @@
  */
 #include "testApp.h"
 #include "lcd.h"
-#include "usart.h"
+//#include "usart.h"
 
 lv_obj_t *tabview;
 lv_obj_t *tab1;

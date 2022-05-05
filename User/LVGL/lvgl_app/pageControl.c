@@ -8,7 +8,7 @@
 #include "main.h"
 #include "config.h"
 #include "page.h"
-#include "usart.h"
+//#include "usart.h"
 #include "motor.h"
 
 static void savePos(void);

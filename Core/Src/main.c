@@ -23,7 +23,6 @@
 #include "dma.h"
 #include "spi.h"
 #include "tim.h"
-#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -64,13 +63,15 @@
 u32 ADC_Value[50];
 u16 pscX;
 u16 pscZ;
-u8 tl;
-u16 zCount;
-u16 xCount;
+u16 tl;
+u16 zCount = 0;
+u16 xCount = 0;
 
-u32 pwm[10] = { 0 };
-u8 flag = 1;
-u8 pwmCount = 0;
+//u32 pwm[10] = { 0 };
+bool flagX = 1;
+bool flagZ = 1;
+//u8 pwmCount = 0;
+//u8 count = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -113,7 +114,6 @@ int main(void) {
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_ADC1_Init();
-  MX_USART1_UART_Init();
   MX_SPI1_Init();
   MX_TIM3_Init();
   MX_TIM1_Init();
@@ -128,24 +128,27 @@ int main(void) {
   LCD_Fill(0, 0, 240, 240, WHITE);
   HAL_Delay(1000);
 #endif
-  for (tl = 0; tl < 10; tl++) {
-    pwm[tl] = 499;
-  }
-  pwm[9] = 1000;
-  // printf("OK");
+
+  //  for (tl = 0; tl < 10; tl++) {
+  //    pwm[tl] = 499;
+  //  }
+  //  pwm[9] = 0;
+    // printf("OK");
   tl = 0;
   pscX = 0;
   pscZ = 0;
-  zCount = 0;
-  xCount = 0;
+  //  zCount = 0;
+  //  xCount = 0;
+
+
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   // HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
 #if 1
 //  HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t *)pwm, 10);
 //  HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_4, (uint32_t *)pwm, 10000);
 #else
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
+  HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_4);
 #endif
 
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADC_Value, 50);
@@ -161,8 +164,9 @@ int main(void) {
   startUp();
 #endif
 
-
   HAL_TIM_Base_Start_IT(&htim3);
+
+
   while (1) {
     // 只是为了看一下CPU正真的利用率
 #if LVGL_RUN
@@ -249,53 +253,144 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
 #if LVGL_RUN
     lv_tick_inc(1);
 #else
-
-    //getAd();
-    //doSth();
-    controlMotor();
-
-#if 0
-    if ((__HAL_TIM_GET_COMPARE(&htim1, TIM_CHANNEL_1) == 499)) {
-      countX++;
 #if 1
-      LCD_ShowIntNum(0, 0, countX, 10, RED, WHITE, 16);
+    getAd();
+    doSth();
+#else
+    controlMotor();
 #endif
-    }
-#endif
+    // LCD_ShowIntNum(0, 60, tl++, 4, BLACK, WHITE, 16);
 #endif
   }
+  //  else if (htim->Instance == htim1.Instance) {
+  //    LCD_ShowIntNum(0, 5, tl++, 5, RED, WHITE, 16);
+  //  }
+    //	if (htim->Instance == htim1.Instance) {
+    //		 LCD_ShowIntNum(0, 0, tl++, 4, BLACK, WHITE, 16);
+    //	}
 }
 
+#if 1
 
-/* 传输完一帧数据以后暂停DMA */
-void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef* htim) {
-  if (flag == 0) {
-    // if ((htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) && \
-    //   (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)) {
-    //   HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
-    //   HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_4);
-    //   //		LCD_ShowIntNum(0, 20, tl++, 3, BLACK, WHITE, 16);
-    //   flag = 1;
-    // }
-    // else if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
-    //   HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_4);
-    //   //LCD_ShowIntNum(0, 20, tl++, 3, BLACK, WHITE, 16);
-    //   flag = 1;
-    // }
-    // else if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {
-    //   HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
-    //   //LCD_ShowIntNum(0, 20, tl++, 3, BLACK, WHITE, 16);
-    //   flag = 1;
-    if ((htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) || \
-       (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)) {
-      HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
-      HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_4);
-      flag = 1;
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef* htim) {
+//  if (TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_1) == HAL_TIM_CHANNEL_STATE_BUSY && \
+//    TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_4) != HAL_TIM_CHANNEL_STATE_BUSY) {
+//    if (flagX == 1) {
+//      if (xCount < XMAX - 10) {
+//        xCount++;
+//        LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
+//      }
+//      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+//    }
+//    else {
+//      if (xCount > 0) {
+//        xCount--;
+//        LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
+//      }
+//      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+//    }
+//  }
+
+
+//  if (TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_4) == HAL_TIM_CHANNEL_STATE_BUSY && \
+//    TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_1) != HAL_TIM_CHANNEL_STATE_BUSY) {
+//    
+//    if (flagZ == 1) {
+//      if (zCount < ZMAX - 10) {
+//        zCount++;
+//        LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
+//      }
+//      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
+//    }
+//    else {
+//      if (zCount > 0) {
+//        zCount--;
+//        LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
+//      }
+//      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
+//    }
+//  }
+
+
+//  if (TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_4) == HAL_TIM_CHANNEL_STATE_BUSY && \
+//    TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_1) == HAL_TIM_CHANNEL_STATE_BUSY) {
+//	if (htim->Channel == TIM_CHANNEL_3)	{
+//			if (flagZ == 1) {
+//      if (zCount < ZMAX - 10) {
+//        zCount++;
+//        LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
+//      }
+//      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
+//    }
+//    else {
+//      if (zCount > 0) {
+//        zCount--;
+//        LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
+//      }
+//      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
+//    }
+//	}	
+//    
+//	if (htim->Channel == TIM_CHANNEL_2) {
+//		if (flagX == 1) {
+//      if (xCount < XMAX - 10) {
+//        xCount++;
+//        LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
+//      }
+//      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+//    }
+//    else {
+//      if (xCount > 0) {
+//        xCount--;
+//        LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
+//      }
+//      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+//    }
+//		xCount = zCount;
+//	}
+//    
+//  }
+if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2 && \
+	htim->Channel != HAL_TIM_ACTIVE_CHANNEL_3) {
+		if (flagX == 1) {
+      if (xCount < XMAX - 10) {
+        xCount++;
+        LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
+      }
+      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
     }
+    else {
+      if (xCount > 0) {
+        xCount--;
+        LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
+      }
+      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+    }
+		//xCount = zCount;
+	}
 
-  }
+	if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3 && \
+		htim->Channel != HAL_TIM_ACTIVE_CHANNEL_2)	{
+			if (flagZ == 1) {
+      if (zCount < ZMAX - 10) {
+        zCount++;
+        LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
+      }
+      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
+    }
+    else {
+      if (zCount > 0) {
+        zCount--;
+        LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
+      }
+      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
+    }
+	}	
+
+
+
 }
-
+#endif
 
 /* USER CODE END 4 */
 

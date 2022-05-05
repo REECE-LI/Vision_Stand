@@ -5,15 +5,16 @@
  * @Date: 2022-04-28 17:10:04
  */
 #include "Motor.h"
-// #include "stm32f4xx_hal_tim.h"
+ // #include "stm32f4xx_hal_tim.h"
 
 
 extern Site screenSite;
 extern u16 pscX;
 extern u16 pscZ;
 extern TIM_HandleTypeDef htim1;
-extern u16 pwm[5];
-extern u8 flag;
+
+extern u8 flagX;
+extern u8 flagZ;
 /**
  * @Name: switchDir
  * @Description: 方向上的选择 0:向左向下，1：向右向上  电机上选择 0：x；1：Z
@@ -50,93 +51,96 @@ void controlMotor(void) {
     getAd();
     switch (keyDir()) {
     case up:
-        if (flag == 1) {
-            if (zCount < ZMAX) {
-
+        if (1) {
+            if (1) {
 #if 1
                 LCD_ShowIntNum(120, 120, 1, 1, BLACK, WHITE, 16);
-                LCD_ShowIntNum(0, 20, zCount++, 4, BLACK, WHITE, 16);
+                //LCD_ShowIntNum(0, 20, zCount++, 4, BLACK, WHITE, 16);
 #endif    
 
                 switchDir(1, 1);
                 pscZ = (u16)(100 + screenSite.y_now * 7.5);
                 __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
-                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_4, (uint32_t*)pwm, 5);
-                flag = 0;
+                HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_4);
+                //flagZ = 0;
             }
         }
         break;
     case down:
-        if (flag == 1) {
-            if (zCount > 0) {
+        if (1) {
+            if (1) {
 #if 1
                 LCD_ShowIntNum(120, 120, 2, 1, BLACK, WHITE, 16);
-                LCD_ShowIntNum(0, 20, zCount--, 4, BLACK, WHITE, 16);
+                //LCD_ShowIntNum(0, 20, zCount--, 4, BLACK, WHITE, 16);
 #endif
                 switchDir(1, 0);
                 pscZ = (u16)(1900 - screenSite.y_now * 7.5);
                 __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
-                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_4, (uint32_t*)pwm, 5);
-                flag = 0;
+                HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_4);
+                //flagZ = 0;
             }
         }
         break;
     case left:
-        if (flag == 1) {
-            if (xCount < XMAX) {
+        if (1) {
+            if (1) {
 #if 1
                 LCD_ShowIntNum(120, 120, 3, 1, BLACK, WHITE, 16);
-                LCD_ShowIntNum(0, 0, xCount++, 4, BLACK, WHITE, 16);
+                //LCD_ShowIntNum(0, 0, xCount++, 4, BLACK, WHITE, 16);
 #endif
                 switchDir(0, 0);
                 pscX = (u16)(100 + screenSite.x_now * 7.5);
                 __HAL_TIM_SET_PRESCALER(&htim1, pscX);
-                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t*)pwm, 5);
-                flag = 0;
+                HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_1);
+                // flagX = 0;
             }
         }
         break;
     case right:
-        if (flag == 1) {
-            if (xCount > 0) {
+        if (1) {
+            if (1) {
 #if 1
                 LCD_ShowIntNum(120, 120, 4, 1, BLACK, WHITE, 16);
-                LCD_ShowIntNum(0, 0, xCount--, 4, BLACK, WHITE, 16);
+                //LCD_ShowIntNum(0, 0, xCount--, 4, BLACK, WHITE, 16);
 #endif
                 switchDir(0, 1);
                 pscX = (u16)(1900 - screenSite.x_now * 7.5);
                 __HAL_TIM_SET_PRESCALER(&htim1, pscX);
-                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t*)pwm, 5);
-                flag = 0;
+                HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_1);
+                //flagX = 0;
             }
         }
         break;
     case up_left:
-        if (flag == 1) {
-            if (xCount < XMAX && zCount < ZMAX) {
-#if 1
-                LCD_ShowIntNum(120, 120, 5, 1, BLACK, WHITE, 16);
-                LCD_ShowIntNum(0, 0, xCount++, 4, BLACK, WHITE, 16);
-                LCD_ShowIntNum(0, 20, zCount++, 4, BLACK, WHITE, 16);
-#endif
-                switchDir(1, 1);
-								switchDir(0, 0);
-                pscZ = (u16)(100 + screenSite.y_now * 7.5);
-                pscX = (u16)(100 + screenSite.x_now * 7.5);
-                __HAL_TIM_SET_PRESCALER(&htim1, pscX);
-                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t*)pwm, 5);
-                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_4, (uint32_t*)pwm, 5);
-                flag = 0;
+        LCD_ShowIntNum(120, 120, 5, 1, BLACK, WHITE, 16);
+        switchDir(0, 0);
+        switchDir(1, 1);
+        pscX = (u16)(100 + screenSite.x_now * 7.5);
+        pscZ = (u16)(100 + screenSite.y_now * 7.5);
+        __HAL_TIM_SET_PRESCALER(&htim1, (pscZ + pscX) / 2);
+        if (1) {
+            if (1) {
+                //LCD_ShowIntNum(120, 120, 3, 1, BLACK, WHITE, 16);
+                //LCD_ShowIntNum(0, 0, xCount++, 4, BLACK, WHITE, 16);
+                HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_1);
+                //flagX = 0;
+            }
+        }
+        if (1) {
+            if (1) {
+                // LCD_ShowIntNum(0, 20, zCount++, 4, BLACK, WHITE, 16);
+                HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_4);
+                //flagZ = 0;
             }
         }
         break;
     case up_right:
-        if (flag == 1) {
-            if (xCount > 0 && zCount < ZMAX) {
+        if (1) {
+            if (1) {
 #if 1
                 LCD_ShowIntNum(120, 120, 6, 1, BLACK, WHITE, 16);
-                LCD_ShowIntNum(0, 0, xCount--, 4, BLACK, WHITE, 16);
-                LCD_ShowIntNum(0, 20, zCount++, 4, BLACK, WHITE, 16);
+                //                LCD_ShowIntNum(0, 0, xCount--, 4, BLACK, WHITE, 16);
+                //                LCD_ShowIntNum(0, 20, zCount++, 4, BLACK, WHITE, 16);
 #endif
                 // 选择轴向 控制方向
                 switchDir(1, 1);
@@ -145,19 +149,19 @@ void controlMotor(void) {
                 switchDir(0, 1);
                 pscX = (u16)(1900 - screenSite.x_now * 7.5);
                 __HAL_TIM_SET_PRESCALER(&htim1, pscX);
-                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t*)pwm, 5);
-                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_4, (uint32_t*)pwm, 5);
-                flag = 0;
+//                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t*)pwm, 5);
+//                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_4, (uint32_t*)pwm, 5);
+                flagX = 0;
             }
         }
         break;
     case down_right:
-        if (flag == 1) {
-            if (xCount > 0 && zCount > 0) {
+        if (1) {
+            if (1) {
 #if 1
                 LCD_ShowIntNum(120, 120, 8, 1, BLACK, WHITE, 16);
-                LCD_ShowIntNum(0, 0, xCount--, 4, BLACK, WHITE, 16);
-                LCD_ShowIntNum(0, 20, zCount--, 4, BLACK, WHITE, 16);
+                //                LCD_ShowIntNum(0, 0, xCount--, 4, BLACK, WHITE, 16);
+                //                LCD_ShowIntNum(0, 20, zCount--, 4, BLACK, WHITE, 16);
 #endif
                 switchDir(1, 0);
                 pscZ = (u16)(1900 - screenSite.y_now * 7.5);
@@ -165,28 +169,28 @@ void controlMotor(void) {
                 HAL_GPIO_WritePin(xDir_GPIO_Port, xDir_Pin, GPIO_PIN_SET);
                 pscX = (u16)(1900 - screenSite.x_now * 7.5);
                 __HAL_TIM_SET_PRESCALER(&htim1, pscX);
-                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t*)pwm, 5);
-                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_4, (uint32_t*)pwm, 5);
-                flag = 0;
+//                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t*)pwm, 5);
+//                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_4, (uint32_t*)pwm, 5);
+                flagX = 0;
             }
         }
         break;
     case down_left:
-        if (flag == 1) {
-            if (xCount < XMAX && zCount > 0) {
+        if (1) {
+            if (1) {
 #if 1
                 LCD_ShowIntNum(120, 120, 7, 1, BLACK, WHITE, 16);
-                LCD_ShowIntNum(0, 0, xCount++, 4, BLACK, WHITE, 16);
-                LCD_ShowIntNum(0, 20, zCount--, 4, BLACK, WHITE, 16);
+                //                LCD_ShowIntNum(0, 0, xCount++, 4, BLACK, WHITE, 16);
+                //                LCD_ShowIntNum(0, 20, zCount--, 4, BLACK, WHITE, 16);
 #endif
                 switchDir(1, 0);
                 pscZ = (u16)(1900 - screenSite.y_now * 7.5);
                 switchDir(0, 0);
                 pscX = (u16)(100 + screenSite.x_now * 7.5);
                 __HAL_TIM_SET_PRESCALER(&htim1, pscX);
-                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t*)pwm, 5);
-                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_4, (uint32_t*)pwm, 5);
-                flag = 0;
+//                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t*)pwm, 5);
+//                HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_4, (uint32_t*)pwm, 5);
+                flagX = 0;
             }
         }
         break;
@@ -195,6 +199,10 @@ void controlMotor(void) {
         break;
     default:
         LCD_ShowIntNum(120, 120, 0, 1, BLACK, WHITE, 16);
+        HAL_TIM_PWM_Stop_IT(&htim1, TIM_CHANNEL_4);
+        HAL_TIM_PWM_Stop_IT(&htim1, TIM_CHANNEL_1);
+        flagX = 1;
+        flagZ = 1;
         // 直接设置占空比为0 中位时停止 转动
      //        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
      //        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
@@ -206,8 +214,8 @@ void controlMotor(void) {
 u32 countX = 0;
 u32 countZ = 0;
 // HAL_TIM_PWM_PulseFinishedCallback  HAL_TIM_TriggerCallback
-void HAL_TIM_TriggerCallback(TIM_HandleTypeDef* htim) {
-    LCD_ShowIntNum(0, 200, countX, 10, RED, WHITE, 16);
+void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef* htim) {
+    LCD_ShowIntNum(0, 0, countX, 10, RED, WHITE, 16);
     if (htim->Instance == htim1.Instance) {
         if (htim->Channel == TIM_CHANNEL_1) {
             countX++;

@@ -35,6 +35,5 @@ adc_f4_test\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 adc_f4_test\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 adc_f4_test\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 adc_f4_test\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
-adc_f4_test\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 adc_f4_test\motor.o: ..\User\ROCKER\rocker.h
 adc_f4_test\motor.o: ..\User\LCD\lcd.h

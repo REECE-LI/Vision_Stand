@@ -1,3 +1,5 @@
 {
-    "editor.fontFamily": "fira code retina, 'Courier New', monospace"
+    "editor.fontFamily": "fira code retina, 'Courier New', monospace",
+    "C_Cpp.dimInactiveRegions": true,
+    "C_Cpp.default.intelliSenseMode": ""
 }

@@ -6,7 +6,7 @@
  *
  */
 #include "page.h"
-#include "usart.h"
+//#include "usart.h"
 
 static void event_callback(lv_obj_t *obj, lv_event_t event);
 
@@ -184,7 +184,7 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             break;
         case LV_KEY_DOWN:
             /* code */
-           HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
+//           HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
             break;
         case LV_KEY_LEFT:
             /* code */

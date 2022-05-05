@@ -22,7 +22,7 @@ extern u8 t;
 lv_disp_drv_t disp_drv_p;      /*Descriptor of a display driver*/
 //extern DMA_HandleTypeDef hdma_spi1_tx;
 extern SPI_HandleTypeDef hspi1;
-extern UART_HandleTypeDef huart1;
+//extern UART_HandleTypeDef huart1;
 /**********************
  *  STATIC PROTOTYPES
  **********************/
