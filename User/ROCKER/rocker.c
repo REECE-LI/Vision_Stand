@@ -198,7 +198,7 @@ void doSth(void) {
     case up_left:
         LCD_ShowIntNum(120, 120, 5, 1, BLACK, WHITE, 16);
         // doSomeThing...
-#if 1
+#if 0
         if (zCount < ZMAX - 10 && xCount < XMAX - 10) {
             flagZ = 1;
             switchDir(1, 1);
@@ -218,7 +218,7 @@ void doSth(void) {
     case up_right:
         LCD_ShowIntNum(120, 120, 6, 1, BLACK, WHITE, 16);
         // doSomeThing...
-#if 1
+#if 0
         if (zCount < ZMAX - 10 && xCount > 10) {
             flagZ = 1;
             switchDir(1, 1);
@@ -232,9 +232,9 @@ void doSth(void) {
             HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
             HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
         }
-				else {
-				zCount = xCount;
-				}
+				// else {
+				// zCount = xCount;
+				// }
 #endif
 
         break;
@@ -264,7 +264,7 @@ void doSth(void) {
         LCD_ShowIntNum(120, 120, 0, 1, BLACK, WHITE, 16);
         // doSomeThing...
 
-#if 1
+#if 0
 //        HAL_TIM_PWM_Stop_DMA(&htim1, TIM_CHANNEL_1);
 //        HAL_TIM_PWM_Stop_DMA(&htim1, TIM_CHANNEL_4);
         HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);

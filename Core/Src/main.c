@@ -128,29 +128,10 @@ int main(void) {
   LCD_Fill(0, 0, 240, 240, WHITE);
   HAL_Delay(1000);
 #endif
-
-  //  for (tl = 0; tl < 10; tl++) {
-  //    pwm[tl] = 499;
-  //  }
-  //  pwm[9] = 0;
-    // printf("OK");
   tl = 0;
   pscX = 0;
   pscZ = 0;
-  //  zCount = 0;
-  //  xCount = 0;
-
-
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
-  // HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
-#if 1
-//  HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t *)pwm, 10);
-//  HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_4, (uint32_t *)pwm, 10000);
-#else
-  HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_4);
-#endif
-
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADC_Value, 50);
   // LCD_ShowPicture(0,0,240,240,gImage_we);
 
@@ -172,29 +153,18 @@ int main(void) {
 #if LVGL_RUN
     lv_task_handler();
 #if 1
-    HAL_UART_Transmit(&huart1, (u8*)ADC_Value, 2, 10);
-#endif
+    //HAL_UART_Transmit(&huart1, (u8*)ADC_Value, 2, 10);
+
     getAd();
     if (!keyDir()) {
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
+      HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+      HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
+      HAL_TIM_IC_Stop_IT(&htim1, TIM_CHANNEL_2);
+      HAL_TIM_IC_Stop_IT(&htim1, TIM_CHANNEL_3);
     }
+#endif
 #else
-   // HAL_TIM_OnePulse_Start(&htim1, TIM_CHANNEL_1);
-     //__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, plusX);
-    // getAd();
-
-     //HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t *)pwm, 100);
-//  HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_4, (uint32_t *)pwm, 10);
-//    if (!keyDir()) {
-//      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
-//      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
-//			
-//			HAL_TIM_Base_Stop_IT(&htim1);
-//    }
-
-
-//   HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t *)pwm, 100);
+   
 
 #endif
 
@@ -259,15 +229,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
 #else
     controlMotor();
 #endif
-    // LCD_ShowIntNum(0, 60, tl++, 4, BLACK, WHITE, 16);
+    
 #endif
   }
-  //  else if (htim->Instance == htim1.Instance) {
-  //    LCD_ShowIntNum(0, 5, tl++, 5, RED, WHITE, 16);
-  //  }
-    //	if (htim->Instance == htim1.Instance) {
-    //		 LCD_ShowIntNum(0, 0, tl++, 4, BLACK, WHITE, 16);
-    //	}
 }
 
 #if 1
@@ -278,14 +242,14 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef* htim) {
     if (flagX == 1) {
       if (xCount < XMAX - 10) {
         xCount++;
-        LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
+        //LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
       }
       else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
     }
     else {
       if (xCount > 0) {
         xCount--;
-        LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
+        //LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
       }
       else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
     }
@@ -298,111 +262,21 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef* htim) {
     if (flagZ == 1) {
       if (zCount < ZMAX - 10) {
         zCount++;
-        LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
+        //LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
       }
       else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
     }
     else {
       if (zCount > 0) {
         zCount--;
-        LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
+        //LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
       }
       else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
     }
   }
 
-
-  if (TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_4) == HAL_TIM_CHANNEL_STATE_BUSY && \
-    TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_1) == HAL_TIM_CHANNEL_STATE_BUSY) {
-    // if (htim->Channel == TIM_CHANNEL_3) {
-    //   if (flagZ == 1) {
-    //     if (zCount < ZMAX - 10) {
-    //       zCount++;
-    //       LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
-    //     }
-    //     else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
-    //   }
-    //   else {
-    //     if (zCount > 0) {
-    //       zCount--;
-    //       LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
-    //     }
-    //     else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
-    //   }
-    // }
-
-    if (htim->Channel == TIM_CHANNEL_2) {
-      if (flagX == 1) {
-        if (xCount < XMAX - 10) {
-          xCount++;
-					//zCount++;
-          LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
-					//LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
-        }
-        else {
-          HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
-          HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
-					
-        }
-				
-				
-      }
-      else {
-        if (xCount > 0) {
-          xCount--;
-					zCount--;
-          LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
-					LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
-        }
-        else {
-          HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
-          HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
-      }
-      
-      
-    }
-
-  }
-//  if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2 && \
-//    htim->Channel != HAL_TIM_ACTIVE_CHANNEL_3) {
-//    if (flagX == 1) {
-//      if (xCount < XMAX - 10) {
-//        xCount++;
-//        LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
-//      }
-//      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
-//    }
-//    else {
-//      if (xCount > 0) {
-//        xCount--;
-//        LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
-//      }
-//      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
-//    }
-//    //xCount = zCount;
-//  }
-
-//  if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3 && \
-//    htim->Channel != HAL_TIM_ACTIVE_CHANNEL_2) {
-//    if (flagZ == 1) {
-//      if (zCount < ZMAX - 10) {
-//        zCount++;
-//        LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
-//      }
-//      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
-//    }
-//    else {
-//      if (zCount > 0) {
-//        zCount--;
-//        LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
-//      }
-//      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
-//    }
-//  }
-
-
 }
-}
+
 #endif
 
 /* USER CODE END 4 */

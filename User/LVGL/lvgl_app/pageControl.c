@@ -23,6 +23,12 @@ extern u16 pscX;
 extern u16 pscZ;
 extern TIM_HandleTypeDef htim1;
 
+extern u16 zCount;
+extern u16 xCount;
+
+extern bool flagX;
+extern bool flagZ;
+
 extern Site screenSite;
 /**
  * @Name: pageControl
@@ -159,17 +165,19 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             /* code */
             if (obj == ledC)
             {
-                if (camY < 130)
+                //if (camY < 130)
                 {
-                    camY += 10;
-                    // 选择轴向 控制方向
-                    switchDir(1, 1);
-                    // 调节轴向电机开关
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
-                    //设置频率 调节速度
-                    pscZ = (u16)(100 + screenSite.y_now * 7.5);
-                    __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
+                    // 130对应着2900
+                    if (zCount < ZMAX - 10) {
+                        camY = zCount / 23;
+                        
+                        flagZ = 1;
+                        switchDir(1, 1);
+                        pscZ = (u16)(999 + screenSite.y_now * 4.1);
+                        __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
+                        HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_3);
+                        HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
+                    }
                 }
             }
             else
@@ -179,14 +187,18 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             /* code */
             if (obj == ledC)
             {
-                if (camY > 0)
+                //if (camY > 0)
                 {
-                    camY -= 10;
-                    switchDir(1, 0);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
-                    pscZ = (u16)(1900 - screenSite.y_now * 7.5);
-                    __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
+                    
+                    if (zCount > 10) {
+                        camY = zCount / 23;
+                        flagZ = 0;
+                        switchDir(1, 0);
+                        pscZ = (u16)(1991 - screenSite.y_now * 4.1);
+                        __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
+                        HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_3);
+                        HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
+                    }
                 }
             }
             else
@@ -196,14 +208,20 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             /* code */
             if (obj == ledC)
             {
-                if (camX < 110)
+                // 110对应590
+                //if (camX < 110)
                 {
-                    camX += 10;
-                    switchDir(0, 0);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
-                    pscX = (u16)(100 + screenSite.x_now * 7.5);
-                    __HAL_TIM_SET_PRESCALER(&htim1, pscX);
+                    
+                    if (xCount < XMAX - 10) {
+                        flagX = 1;
+                        camX = xCount/5.4;
+                        switchDir(0, 0);
+                        pscX = (u16)(999 + screenSite.x_now * 4.1);
+                        __HAL_TIM_SET_PRESCALER(&htim1, pscX);
+                        //HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, pwm, 10);
+                        HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_2);
+                        HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+                    }
                 }
             }
             else
@@ -213,14 +231,19 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             /* code */
             if (obj == ledC)
             {
-                if (camX > 0)
+                //if (camX > 0)
                 {
-                    camX -= 10;
-                    switchDir(0, 1);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
-                    pscX = (u16)(1900 - screenSite.x_now * 7.5);
-                    __HAL_TIM_SET_PRESCALER(&htim1, pscX);
+                    
+                    if (xCount > 10) {
+                        flagX = 0;
+                        camX = xCount / 5.4;
+                        switchDir(0, 1);
+                        pscX = (u16)(1991 - screenSite.x_now * 4.1);
+                        __HAL_TIM_SET_PRESCALER(&htim1, pscX);
+                        // HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, pwm, 10);
+                        HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_2);
+                        HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+                    }
                 }
             }
             else
@@ -230,105 +253,105 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             /* code */
             if (obj == ledC)
             {
-                if (camY < 130)
-                {
-                    camY += 10;
-                    // 选择轴向 控制方向
-                    switchDir(1, 1);
-                    // 调节轴向电机开关
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
-                    //设置频率 调节速度
-                    pscZ = (u16)(100 + screenSite.y_now * 7.5);
-                    __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
-                }
+                // if (camY < 130)
+                // {
+                //     camY += 10;
+                //     // 选择轴向 控制方向
+                //     switchDir(1, 1);
+                //     // 调节轴向电机开关
+                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
+                //     //设置频率 调节速度
+                //     pscZ = (u16)(100 + screenSite.y_now * 7.5);
+                //     __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
+                // }
 
-                if (camX < 110)
-                {
-                    camX += 10;
-                    switchDir(0, 0);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
-                    pscX = (u16)(100 + screenSite.x_now * 7.5);
-                    __HAL_TIM_SET_PRESCALER(&htim1, pscX);
-                }
+                // if (camX < 110)
+                // {
+                //     camX += 10;
+                //     switchDir(0, 0);
+                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
+                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
+                //     pscX = (u16)(100 + screenSite.x_now * 7.5);
+                //     __HAL_TIM_SET_PRESCALER(&htim1, pscX);
+                // }
             }
             break;
         case LV_KEY_UP_RIGHT:
             /* code */
             if (obj == ledC)
             {
-                if (camY < 130)
-                {
-                    camY += 10;
-                    // 选择轴向 控制方向
-                    switchDir(1, 1);
-                    // 调节轴向电机开关
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
-                    //设置频率 调节速度
-                    pscZ = (u16)(100 + screenSite.y_now * 7.5);
-                    __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
-                }
+                // if (camY < 130)
+                // {
+                //     camY += 10;
+                //     // 选择轴向 控制方向
+                //     switchDir(1, 1);
+                //     // 调节轴向电机开关
+                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
+                //     //设置频率 调节速度
+                //     pscZ = (u16)(100 + screenSite.y_now * 7.5);
+                //     __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
+                // }
 
-                if (camX > 0)
-                {
-                    camX -= 10;
-                    switchDir(0, 1);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
-                    pscX = (u16)(1900 - screenSite.x_now * 7.5);
-                    __HAL_TIM_SET_PRESCALER(&htim1, pscX);
-                }
+                // if (camX > 0)
+                // {
+                //     camX -= 10;
+                //     switchDir(0, 1);
+                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
+                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
+                //     pscX = (u16)(1900 - screenSite.x_now * 7.5);
+                //     __HAL_TIM_SET_PRESCALER(&htim1, pscX);
+                // }
             }
             break;
         case LV_KEY_DOWN_RIGHT:
             /* code */
             if (obj == ledC)
             {
-                if (camY > 0)
-                {
-                    camY -= 10;
-                    switchDir(1, 0);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
-                    pscZ = (u16)(1900 - screenSite.y_now * 7.5);
-                    __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
-                }
+                // if (camY > 0)
+                // {
+                //     camY -= 10;
+                //     switchDir(1, 0);
+                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
+                //     pscZ = (u16)(1900 - screenSite.y_now * 7.5);
+                //     __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
+                // }
 
-                if (camX > 0)
-                {
-                    camX -= 10;
-                    switchDir(0, 1);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
-                    pscX = (u16)(1900 - screenSite.x_now * 7.5);
-                    __HAL_TIM_SET_PRESCALER(&htim1, pscX);
-                }
+                // if (camX > 0)
+                // {
+                //     camX -= 10;
+                //     switchDir(0, 1);
+                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
+                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
+                //     pscX = (u16)(1900 - screenSite.x_now * 7.5);
+                //     __HAL_TIM_SET_PRESCALER(&htim1, pscX);
+                // }
             }
             break;
         case LV_KEY_DOWN_LEFT:
             /* code */
             if (obj == ledC)
             {
-                if (camY > 0)
-                {
-                    camY -= 10;
-                    switchDir(1, 0);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
-                    pscZ = (u16)(1900 - screenSite.y_now * 7.5);
-                    __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
-                }
-                if (camX < 110)
-                {
-                    camX += 10;
-                    switchDir(0, 0);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
-                    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
-                    pscX = (u16)(100 + screenSite.x_now * 7.5);
-                    __HAL_TIM_SET_PRESCALER(&htim1, pscX);
-                }
+                // if (camY > 0)
+                // {
+                //     camY -= 10;
+                //     switchDir(1, 0);
+                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
+                //     pscZ = (u16)(1900 - screenSite.y_now * 7.5);
+                //     __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
+                // }
+                // if (camX < 110)
+                // {
+                //     camX += 10;
+                //     switchDir(0, 0);
+                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
+                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
+                //     pscX = (u16)(100 + screenSite.x_now * 7.5);
+                //     __HAL_TIM_SET_PRESCALER(&htim1, pscX);
+                // }
             }
             break;
         case LV_KEY_FUC:
@@ -358,12 +381,10 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
 
             break;
         case LV_KEY_DEL:
-            __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
-            __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
+            
             break;
         default:
-            __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
-            __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
+            
             break;
         }
 
