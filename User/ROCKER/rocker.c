@@ -226,12 +226,15 @@ void doSth(void) {
             flagX = 1;
             switchDir(0, 1);
             pscX = (u16)(1991 - screenSite.x_now * 4.1);
-            __HAL_TIM_SET_PRESCALER(&htim1, (u16)((pscX + pscZ) / 2));
+            __HAL_TIM_SET_PRESCALER(&htim1, 999);
             HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_2);
-            HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_3);
+            // HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_3);
             HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
             HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
         }
+				else {
+				zCount = xCount;
+				}
 #endif
 
         break;

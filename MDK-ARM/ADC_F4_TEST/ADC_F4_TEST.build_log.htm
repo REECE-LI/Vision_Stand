@@ -27,11 +27,41 @@ Project File Date:  05/05/2022
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'ADC_F4_TEST'
+compiling rocker.c...
+..\User\ROCKER\rocker.c(50): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      ady = ady / 25.0 * 3.3 / 4096;
+..\User\ROCKER\rocker.c(51): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      adx = adx / 25.0 * 3.3 / 4096;
+..\User\ROCKER\rocker.c(60): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      adx = adx / 3.3 * 240;
+..\User\ROCKER\rocker.c(61): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      ady = ady / 3.3 * 240;
+..\User\ROCKER\rocker.c(45): warning:  #177-D: variable "x"  was declared but never referenced
+      u8 x, y;
+..\User\ROCKER\rocker.c(45): warning:  #177-D: variable "y"  was declared but never referenced
+      u8 x, y;
+..\User\ROCKER\rocker.c(138): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+              pscZ = (u16)(999 + screenSite.y_now * 4.1);
+..\User\ROCKER\rocker.c(154): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+              pscZ = (u16)(1991 - screenSite.y_now * 4.1);
+..\User\ROCKER\rocker.c(169): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+              pscX = (u16)(999 + screenSite.x_now * 4.1);
+..\User\ROCKER\rocker.c(187): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+              pscX = (u16)(1991 - screenSite.x_now * 4.1);
+..\User\ROCKER\rocker.c(205): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+              pscZ = (u16)(999 + screenSite.y_now * 4.1);
+..\User\ROCKER\rocker.c(208): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+              pscX = (u16)(999 + screenSite.x_now * 4.1);
+..\User\ROCKER\rocker.c(225): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+              pscZ = (u16)(999 + screenSite.y_now * 4.1);
+..\User\ROCKER\rocker.c(228): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+              pscX = (u16)(1991 - screenSite.x_now * 4.1);
+..\User\ROCKER\rocker.c: 14 warnings, 0 errors
 compiling main.c...
 linking...
-Program Size: Code=21010 RO-data=13774 RW-data=116 ZI-data=35700  
+Program Size: Code=21238 RO-data=13774 RW-data=116 ZI-data=35700  
 FromELF: creating hex file...
-"ADC_F4_TEST\ADC_F4_TEST.axf" - 0 Error(s), 0 Warning(s).
+"ADC_F4_TEST\ADC_F4_TEST.axf" - 0 Error(s), 14 Warning(s).
 
 <h2>Software Packages used:</h2>
 

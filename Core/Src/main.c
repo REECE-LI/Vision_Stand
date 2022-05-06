@@ -273,8 +273,98 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
 #if 1
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef* htim) {
-//  if (TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_1) == HAL_TIM_CHANNEL_STATE_BUSY && \
-//    TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_4) != HAL_TIM_CHANNEL_STATE_BUSY) {
+  if (TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_1) == HAL_TIM_CHANNEL_STATE_BUSY && \
+    TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_4) != HAL_TIM_CHANNEL_STATE_BUSY) {
+    if (flagX == 1) {
+      if (xCount < XMAX - 10) {
+        xCount++;
+        LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
+      }
+      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+    }
+    else {
+      if (xCount > 0) {
+        xCount--;
+        LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
+      }
+      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+    }
+  }
+
+
+  if (TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_4) == HAL_TIM_CHANNEL_STATE_BUSY && \
+    TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_1) != HAL_TIM_CHANNEL_STATE_BUSY) {
+
+    if (flagZ == 1) {
+      if (zCount < ZMAX - 10) {
+        zCount++;
+        LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
+      }
+      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
+    }
+    else {
+      if (zCount > 0) {
+        zCount--;
+        LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
+      }
+      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
+    }
+  }
+
+
+  if (TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_4) == HAL_TIM_CHANNEL_STATE_BUSY && \
+    TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_1) == HAL_TIM_CHANNEL_STATE_BUSY) {
+    // if (htim->Channel == TIM_CHANNEL_3) {
+    //   if (flagZ == 1) {
+    //     if (zCount < ZMAX - 10) {
+    //       zCount++;
+    //       LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
+    //     }
+    //     else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
+    //   }
+    //   else {
+    //     if (zCount > 0) {
+    //       zCount--;
+    //       LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
+    //     }
+    //     else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
+    //   }
+    // }
+
+    if (htim->Channel == TIM_CHANNEL_2) {
+      if (flagX == 1) {
+        if (xCount < XMAX - 10) {
+          xCount++;
+					//zCount++;
+          LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
+					//LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
+        }
+        else {
+          HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+          HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
+					
+        }
+				
+				
+      }
+      else {
+        if (xCount > 0) {
+          xCount--;
+					zCount--;
+          LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
+					LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
+        }
+        else {
+          HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+          HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
+      }
+      
+      
+    }
+
+  }
+//  if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2 && \
+//    htim->Channel != HAL_TIM_ACTIVE_CHANNEL_3) {
 //    if (flagX == 1) {
 //      if (xCount < XMAX - 10) {
 //        xCount++;
@@ -289,12 +379,11 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef* htim) {
 //      }
 //      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
 //    }
+//    //xCount = zCount;
 //  }
 
-
-//  if (TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_4) == HAL_TIM_CHANNEL_STATE_BUSY && \
-//    TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_1) != HAL_TIM_CHANNEL_STATE_BUSY) {
-//    
+//  if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3 && \
+//    htim->Channel != HAL_TIM_ACTIVE_CHANNEL_2) {
 //    if (flagZ == 1) {
 //      if (zCount < ZMAX - 10) {
 //        zCount++;
@@ -312,83 +401,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef* htim) {
 //  }
 
 
-//  if (TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_4) == HAL_TIM_CHANNEL_STATE_BUSY && \
-//    TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_1) == HAL_TIM_CHANNEL_STATE_BUSY) {
-//	if (htim->Channel == TIM_CHANNEL_3)	{
-//			if (flagZ == 1) {
-//      if (zCount < ZMAX - 10) {
-//        zCount++;
-//        LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
-//      }
-//      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
-//    }
-//    else {
-//      if (zCount > 0) {
-//        zCount--;
-//        LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
-//      }
-//      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
-//    }
-//	}	
-//    
-//	if (htim->Channel == TIM_CHANNEL_2) {
-//		if (flagX == 1) {
-//      if (xCount < XMAX - 10) {
-//        xCount++;
-//        LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
-//      }
-//      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
-//    }
-//    else {
-//      if (xCount > 0) {
-//        xCount--;
-//        LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
-//      }
-//      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
-//    }
-//		xCount = zCount;
-//	}
-//    
-//  }
-if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2 && \
-	htim->Channel != HAL_TIM_ACTIVE_CHANNEL_3) {
-		if (flagX == 1) {
-      if (xCount < XMAX - 10) {
-        xCount++;
-        LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
-      }
-      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
-    }
-    else {
-      if (xCount > 0) {
-        xCount--;
-        LCD_ShowIntNum(0, 5, xCount, 10, RED, WHITE, 16);
-      }
-      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
-    }
-		//xCount = zCount;
-	}
-
-	if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3 && \
-		htim->Channel != HAL_TIM_ACTIVE_CHANNEL_2)	{
-			if (flagZ == 1) {
-      if (zCount < ZMAX - 10) {
-        zCount++;
-        LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
-      }
-      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
-    }
-    else {
-      if (zCount > 0) {
-        zCount--;
-        LCD_ShowIntNum(0, 25, zCount, 10, RED, WHITE, 16);
-      }
-      else HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4);
-    }
-	}	
-
-
-
+}
 }
 #endif
 
