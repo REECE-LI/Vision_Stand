@@ -9,14 +9,20 @@
 #include "main.h"
 #include "config.h"
 #include "page.h"
-//#include "usart.h"
+ //#include "usart.h"
 
-static void event_callback(lv_obj_t *obj, lv_event_t event);
+static void event_callback(lv_obj_t* obj, lv_event_t event);
 extern void pageControl(void);
-static lv_obj_t *btnPos1;
-static lv_obj_t *btnPos2;
-static lv_obj_t *btnPos3;
-static lv_obj_t *btnPos4;
+static lv_obj_t* btnPos1;
+static lv_obj_t* btnPos2;
+static lv_obj_t* btnPos3;
+static lv_obj_t* btnPos4;
+
+loacateRem btnRem1;
+loacateRem btnRem2;
+loacateRem btnRem3;
+loacateRem btnRem4;
+
 /**
  * @Name: pageControl
  * @Description: 这个函数只会进入一次 之后的app页面处理函数另外写
@@ -24,8 +30,7 @@ static lv_obj_t *btnPos4;
  * @Return:
  * @Date: 2022-04-25 10:30:47
  */
-void appRemember(void)
-{
+void appRemember(void) {
 
     // 不管干啥了 先TMD 清屏
 #if 1
@@ -65,7 +70,7 @@ void appRemember(void)
     lv_obj_align(btnPos3, NULL, LV_ALIGN_CENTER, -55, 50);
     lv_obj_align(btnPos4, NULL, LV_ALIGN_CENTER, 55, 50);
 
-    lv_obj_t *label;
+    lv_obj_t* label;
     label = lv_label_create(btnPos1, NULL);
     lv_label_set_text(label, "POS1");
 
@@ -89,15 +94,12 @@ void appRemember(void)
     lv_group_set_editing(appGroup, true);
 }
 
-static void event_callback(lv_obj_t *obj, lv_event_t event)
-{
-    if (event == LV_EVENT_KEY)
-    {
+static void event_callback(lv_obj_t* obj, lv_event_t event) {
+    if (event == LV_EVENT_KEY) {
         //HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
         static u8 ID = 1;
-        const u32 *key = lv_event_get_data();
-        switch (*key)
-        {
+        const u32* key = lv_event_get_data();
+        switch (*key) {
         case LV_KEY_UP:
             lv_group_focus_prev(appGroup);
             break;
@@ -108,11 +110,10 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             lv_group_focus_prev(appGroup);
             break;
         case LV_KEY_RIGHT:
-        lv_group_focus_next(appGroup);
+            lv_group_focus_next(appGroup);
             break;
         case LV_KEY_FUC:
-          if (obj == btnPos1 || obj == btnPos2 || obj == btnPos3 || obj == btnPos4)
-            {
+            if (obj == btnPos1 || obj == btnPos2 || obj == btnPos3 || obj == btnPos4) {
                 appControl();
             }
             break;

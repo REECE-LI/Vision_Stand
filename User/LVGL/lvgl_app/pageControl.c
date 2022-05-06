@@ -8,16 +8,16 @@
 #include "main.h"
 #include "config.h"
 #include "page.h"
-//#include "usart.h"
+ //#include "usart.h"
 #include "motor.h"
 
 static void savePos(void);
-static void event_callback(lv_obj_t *obj, lv_event_t event);
+static void event_callback(lv_obj_t* obj, lv_event_t event);
 
-static lv_obj_t *btnPos1;
-static lv_obj_t *btnPos2;
-static lv_obj_t *btnPos3;
-static lv_obj_t *btnPos4;
+static lv_obj_t* btnPos1;
+static lv_obj_t* btnPos2;
+static lv_obj_t* btnPos3;
+static lv_obj_t* btnPos4;
 
 extern u16 pscX;
 extern u16 pscZ;
@@ -30,6 +30,12 @@ extern bool flagX;
 extern bool flagZ;
 
 extern Site screenSite;
+
+
+extern loacateRem btnRem1;
+extern loacateRem btnRem2;
+extern loacateRem btnRem3;
+extern loacateRem btnRem4;
 /**
  * @Name: pageControl
  * @Description: 这个函数只会进入一次 之后的app页面处理函数另外写
@@ -37,8 +43,7 @@ extern Site screenSite;
  * @Return:
  * @Date: 2022-04-25 10:30:47
  */
-void pageControl(void)
-{
+void pageControl(void) {
 
     // LV_IMG_DECLARE(imgControl);
 #if 1
@@ -50,7 +55,7 @@ void pageControl(void)
 #endif
 #if 0
     creatTitle("CONTROL", 0, 40);
-    creatImg(&imgControl, 0 ,65);
+    creatImg(&imgControl, 0, 65);
 #else
     creatTitle(pagesApp[1].name, 0, 40);
     creatImg(pagesApp[1].src_img, 0, 65);
@@ -63,10 +68,10 @@ void pageControl(void)
 // lv_obj_t *chart;
 // lv_chart_series_t *ser1;
 u8 camX, camY;
-lv_obj_t *page;
-lv_obj_t *ledC;
-lv_obj_t *btnSave;
-lv_obj_t *btnExit;
+lv_obj_t* page;
+lv_obj_t* ledC;
+lv_obj_t* btnSave;
+lv_obj_t* btnExit;
 /**
  * @Name: appControl
  * @Description: 界面控制 3个元素
@@ -74,11 +79,10 @@ lv_obj_t *btnExit;
  * @Return:
  * @Date: 2022-04-27 11:08:43
  */
-void appControl(void)
-{
-// 进入函数清屏 TMD 进去死机 不进去了 直接覆盖 LMM
-// TMD直接在外面进入50界面 反正啥都没有 我TMD真是个小天才
-// 图标方案淘汰 直接在画布上显示LED 灯 表示 当前滑块所在位置 更加直接 并且可以做到无级调节
+void appControl(void) {
+    // 进入函数清屏 TMD 进去死机 不进去了 直接覆盖 LMM
+    // TMD直接在外面进入50界面 反正啥都没有 我TMD真是个小天才
+    // 图标方案淘汰 直接在画布上显示LED 灯 表示 当前滑块所在位置 更加直接 并且可以做到无级调节
 #if 1
 #if 1
     lv_obj_clean(appWindow);
@@ -137,7 +141,7 @@ void appControl(void)
     lv_obj_set_event_cb(btnSave, event_callback);
     lv_obj_set_event_cb(btnExit, event_callback);
 
-    lv_obj_t *label;
+    lv_obj_t* label;
     label = lv_label_create(btnSave, NULL);
     lv_label_set_text(label, "SAVE");
 
@@ -150,27 +154,23 @@ void appControl(void)
     lv_group_set_editing(appGroup, true);
 }
 
-static void event_callback(lv_obj_t *obj, lv_event_t event)
-{
+static void event_callback(lv_obj_t* obj, lv_event_t event) {
 
-    if (event == LV_EVENT_KEY)
-    {
+    if (event == LV_EVENT_KEY) {
         // controlMotor();
         // HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
         // static u8 ID = 1;
-        const u32 *key = lv_event_get_data();
-        switch (*key)
-        {
+        const u32* key = lv_event_get_data();
+        switch (*key) {
         case LV_KEY_UP:
             /* code */
-            if (obj == ledC)
-            {
+            if (obj == ledC) {
                 //if (camY < 130)
                 {
                     // 130对应着2900
                     if (zCount < ZMAX - 10) {
                         camY = zCount / 23;
-                        
+
                         flagZ = 1;
                         switchDir(1, 1);
                         pscZ = (u16)(999 + screenSite.y_now * 4.1);
@@ -185,11 +185,10 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             break;
         case LV_KEY_DOWN:
             /* code */
-            if (obj == ledC)
-            {
+            if (obj == ledC) {
                 //if (camY > 0)
                 {
-                    
+
                     if (zCount > 10) {
                         camY = zCount / 23;
                         flagZ = 0;
@@ -206,15 +205,14 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             break;
         case LV_KEY_LEFT:
             /* code */
-            if (obj == ledC)
-            {
+            if (obj == ledC) {
                 // 110对应590
                 //if (camX < 110)
                 {
-                    
+
                     if (xCount < XMAX - 10) {
                         flagX = 1;
-                        camX = xCount/5.4;
+                        camX = xCount / 5.4;
                         switchDir(0, 0);
                         pscX = (u16)(999 + screenSite.x_now * 4.1);
                         __HAL_TIM_SET_PRESCALER(&htim1, pscX);
@@ -229,11 +227,10 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             break;
         case LV_KEY_RIGHT:
             /* code */
-            if (obj == ledC)
-            {
+            if (obj == ledC) {
                 //if (camX > 0)
                 {
-                    
+
                     if (xCount > 10) {
                         flagX = 0;
                         camX = xCount / 5.4;
@@ -251,145 +248,64 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
             break;
         case LV_KEY_UP_LEFT:
             /* code */
-            if (obj == ledC)
-            {
-                // if (camY < 130)
-                // {
-                //     camY += 10;
-                //     // 选择轴向 控制方向
-                //     switchDir(1, 1);
-                //     // 调节轴向电机开关
-                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
-                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
-                //     //设置频率 调节速度
-                //     pscZ = (u16)(100 + screenSite.y_now * 7.5);
-                //     __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
-                // }
+            if (obj == ledC) {
 
-                // if (camX < 110)
-                // {
-                //     camX += 10;
-                //     switchDir(0, 0);
-                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
-                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
-                //     pscX = (u16)(100 + screenSite.x_now * 7.5);
-                //     __HAL_TIM_SET_PRESCALER(&htim1, pscX);
-                // }
             }
             break;
         case LV_KEY_UP_RIGHT:
             /* code */
-            if (obj == ledC)
-            {
-                // if (camY < 130)
-                // {
-                //     camY += 10;
-                //     // 选择轴向 控制方向
-                //     switchDir(1, 1);
-                //     // 调节轴向电机开关
-                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
-                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
-                //     //设置频率 调节速度
-                //     pscZ = (u16)(100 + screenSite.y_now * 7.5);
-                //     __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
-                // }
+            if (obj == ledC) {
 
-                // if (camX > 0)
-                // {
-                //     camX -= 10;
-                //     switchDir(0, 1);
-                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
-                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
-                //     pscX = (u16)(1900 - screenSite.x_now * 7.5);
-                //     __HAL_TIM_SET_PRESCALER(&htim1, pscX);
-                // }
             }
             break;
         case LV_KEY_DOWN_RIGHT:
             /* code */
-            if (obj == ledC)
-            {
-                // if (camY > 0)
-                // {
-                //     camY -= 10;
-                //     switchDir(1, 0);
-                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
-                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
-                //     pscZ = (u16)(1900 - screenSite.y_now * 7.5);
-                //     __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
-                // }
+            if (obj == ledC) {
 
-                // if (camX > 0)
-                // {
-                //     camX -= 10;
-                //     switchDir(0, 1);
-                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
-                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
-                //     pscX = (u16)(1900 - screenSite.x_now * 7.5);
-                //     __HAL_TIM_SET_PRESCALER(&htim1, pscX);
-                // }
             }
             break;
         case LV_KEY_DOWN_LEFT:
             /* code */
-            if (obj == ledC)
-            {
-                // if (camY > 0)
-                // {
-                //     camY -= 10;
-                //     switchDir(1, 0);
-                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
-                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 499);
-                //     pscZ = (u16)(1900 - screenSite.y_now * 7.5);
-                //     __HAL_TIM_SET_PRESCALER(&htim1, pscZ);
-                // }
-                // if (camX < 110)
-                // {
-                //     camX += 10;
-                //     switchDir(0, 0);
-                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 499);
-                //     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
-                //     pscX = (u16)(100 + screenSite.x_now * 7.5);
-                //     __HAL_TIM_SET_PRESCALER(&htim1, pscX);
-                // }
+            if (obj == ledC) {
+
             }
             break;
         case LV_KEY_FUC:
             /* code */
-            if (obj == ledC)
-            {
+            if (obj == ledC) {
                 lv_group_focus_next(appGroup);
             }
 
-            else if (obj == btnExit)
-            {
+            else if (obj == btnExit) {
                 pageSwitch(5, 1);
             }
-            else if (obj == btnSave)
-            {
-// save in flash
+            else if (obj == btnSave) {
+                // save in flash
 #if 1
                 savePos();
 #else
                 lv_group_focus_next(appGroup);
 #endif
             }
-            else if (obj == btnPos1 || obj == btnPos2 || obj == btnPos3 || obj == btnPos4)
-            {
+            else if (obj == btnPos1) {
+                // 进行地址保存 写入flash
+                btnRem1.x = xCount;
+                btnRem1.z = zCount;
+
+
+                // 回到控制菜单页面
                 pageSwitch(5, 1);
             }
 
             break;
         case LV_KEY_DEL:
-            
+
             break;
         default:
-            
+
             break;
         }
-
-        if (obj == ledC)
-        {
+        if (obj == ledC) {
             lv_obj_set_pos(ledC, 110 - camX, 130 - camY);
         }
     }
@@ -403,9 +319,8 @@ static void event_callback(lv_obj_t *obj, lv_event_t event)
  * @Date: 2022-04-27 11:10:19
  */
 
-static void savePos(void)
-{
-// 不管干啥了 先TMD 清屏
+static void savePos(void) {
+    // 不管干啥了 先TMD 清屏
 #if 1
     lv_obj_clean(appWindow);
 #endif
@@ -443,7 +358,7 @@ static void savePos(void)
     lv_obj_align(btnPos3, NULL, LV_ALIGN_CENTER, -55, 50);
     lv_obj_align(btnPos4, NULL, LV_ALIGN_CENTER, 55, 50);
 
-    lv_obj_t *label;
+    lv_obj_t* label;
     label = lv_label_create(btnPos1, NULL);
     lv_label_set_text(label, "POS1");
 

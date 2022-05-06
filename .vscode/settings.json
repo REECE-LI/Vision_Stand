@@ -1,5 +1,11 @@
 {
     "editor.fontFamily": "fira code retina, 'Courier New', monospace",
     "C_Cpp.dimInactiveRegions": true,
-    "C_Cpp.default.intelliSenseMode": ""
+    "C_Cpp.default.intelliSenseMode": "",
+    "fileheader.customMade": {
+
+       "Description":"",
+        "Author":"李明骏",
+        "Date":"Do not edit",
+    }
 }
