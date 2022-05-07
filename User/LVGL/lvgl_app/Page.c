@@ -31,12 +31,12 @@ LV_IMG_DECLARE(imgAbout);
 
 PageApp pagesApp[] =
     {
-        {.src_img = &imgControl,.pageID = PAGE_NONE},
+        {.name = "TODO LIST",.pageID = PAGE_NONE},
         {.src_img = &imgControl, .name = "CONTROL", .pageID = PAGE_CONTROL},
         {.src_img = &imgRemember, .name = "REMEMBER", .pageID = PAGE_REMEMBER},
         {.src_img = &imgRoll, .name = "ROLL", .pageID = PAGE_ROLL},
         {.src_img = &imgAbout, .name = "ABOUT", .pageID = PAGE_ABOUT},
-        {.name = "TODO LIST"},
+      
 
 };
 
@@ -232,13 +232,9 @@ static void event_callback(lv_obj_t* obj, lv_event_t event)
             appRemember();
             else if (ID == 3)
             {
-                appRoll();
-            }
-            else if (ID == 4)
-            {
                 appAbout();
+               // appRoll();
             }
-            
 
         default:
             break;

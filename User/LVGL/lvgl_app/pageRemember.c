@@ -122,12 +122,12 @@ static void event_callback(lv_obj_t* obj, lv_event_t event) {
         case LV_KEY_FUC:
             if (obj == btnPos1) {
                 if (1) {
-                    readHWFlash((u16*)btnRem1, 2);
-                    camX = btnRem1[0];
-                    camY = btnRem1[1];
-                    xCount = camX * 5.4;
-                    zCount = camY * 23;
-                    appControl();
+                    // readHWFlash((u16*)btnRem1, 2);
+                    // camX = btnRem1[0];
+                    // camY = btnRem1[1];
+                    // xCount = camX * 5.4;
+                    // zCount = camY * 23;
+                    // appControl();
                 }
                 // else if (ID == 1) {
                     

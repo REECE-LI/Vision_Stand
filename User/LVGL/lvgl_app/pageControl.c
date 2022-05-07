@@ -283,21 +283,21 @@ static void event_callback(lv_obj_t* obj, lv_event_t event) {
             else if (obj == btnSave) {
                 // save in flash
 #if 1
-                savePos();
+                // savePos();
 #else
                 lv_group_focus_next(appGroup);
 #endif
             }
-            else if (obj == btnPos1) {
-                // 进行地址保存 写入flash
-                btnRem1[0] = xCount;
-                btnRem1[1] = zCount;
-                wirteHWFlash((u16*)btnRem1, 2);
+            // else if (obj == btnPos1) {
+            //     // 进行地址保存 写入flash
+            //     btnRem1[0] = xCount;
+            //     btnRem1[1] = zCount;
+            //     wirteHWFlash((u16*)btnRem1, 2);
 
-                // 回到控制菜单页面
-                ID = 1;
-                pageSwitch(4, 1);
-            }
+            //     // 回到控制菜单页面
+            //     ID = 1;
+            //     pageSwitch(4, 1);
+            // }
 
             break;
         case LV_KEY_DEL:

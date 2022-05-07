@@ -1230,7 +1230,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x61ECD550)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x61ECD550)
 I (..\User\ROCKER\rocker.h)(0x6274879A)
 I (..\User\LCD\lcd.h)(0x62626DBD)
-F (..\User\FLASH\flash.c)(0x6276361D)(--c99 -c --cpu Cortex-M4.fp -g -O0 -Otime --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\User\LCD -I ..\User\ROCKER -I ..\User\LVGL -I ..\User\LVGL\lvgl_driver -I ..\User\LVGL\lvgl -I ..\User\KEY -I ..\User\LVGL\lvgl_app -I ..\User -I ..\User\MOTOR -I ..\User\FLASH-I.\RTE\_ADC_F4_TEST-IC:\Users\X\AppData\Local\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IC:\Users\X\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.16.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F411xE -DUSE_HAL_DRIVER -DSTM32F411xE-o adc_f4_test\flash.o --omf_browse adc_f4_test\flash.crf --depend adc_f4_test\flash.d)
+F (..\User\FLASH\flash.c)(0x62763B2D)(--c99 -c --cpu Cortex-M4.fp -g -O0 -Otime --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\User\LCD -I ..\User\ROCKER -I ..\User\LVGL -I ..\User\LVGL\lvgl_driver -I ..\User\LVGL\lvgl -I ..\User\KEY -I ..\User\LVGL\lvgl_app -I ..\User -I ..\User\MOTOR -I ..\User\FLASH-I.\RTE\_ADC_F4_TEST-IC:\Users\X\AppData\Local\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IC:\Users\X\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.16.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F411xE -DUSE_HAL_DRIVER -DSTM32F411xE-o adc_f4_test\flash.o --omf_browse adc_f4_test\flash.crf --depend adc_f4_test\flash.d)
 I (..\User\FLASH\flash.h)(0x627631DC)
 I (../Core/Inc/main.h)(0x6273C722)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x61ECD550)
@@ -7659,7 +7659,7 @@ I (..\User\LVGL\lvgl\src/lv_widgets/lv_spinbox.h)(0x62626DBE)
 I (..\User\LVGL\lvgl\src/lv_draw/lv_img_cache.h)(0x62626DBE)
 I (..\User\LVGL\lvgl\src/lv_api_map.h)(0x62626DBE)
 I (..\User\LVGL\lvgl\src/../lvgl.h)(0x62626DBE)
-I (..\User\LVGL\lvgl_app\Page.h)(0x6274B613)
+I (..\User\LVGL\lvgl_app\Page.h)(0x62764789)
 I (../Core/Inc/main.h)(0x6273C722)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x61ECD550)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x62748799)
@@ -7692,7 +7692,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x61ECD550)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x61ECD550)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x61ECD550)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x61ECD550)
-F (..\User\LVGL\lvgl_app\pageControl.c)(0x62762F97)(--c99 -c --cpu Cortex-M4.fp -g -O0 -Otime --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\User\LCD -I ..\User\ROCKER -I ..\User\LVGL -I ..\User\LVGL\lvgl_driver -I ..\User\LVGL\lvgl -I ..\User\KEY -I ..\User\LVGL\lvgl_app -I ..\User -I ..\User\MOTOR -I ..\User\FLASH-I.\RTE\_ADC_F4_TEST-IC:\Users\X\AppData\Local\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IC:\Users\X\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.16.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F411xE -DUSE_HAL_DRIVER -DSTM32F411xE-o adc_f4_test\pagecontrol.o --omf_browse adc_f4_test\pagecontrol.crf --depend adc_f4_test\pagecontrol.d)
+F (..\User\LVGL\lvgl_app\pageControl.c)(0x62764708)(--c99 -c --cpu Cortex-M4.fp -g -O0 -Otime --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\User\LCD -I ..\User\ROCKER -I ..\User\LVGL -I ..\User\LVGL\lvgl_driver -I ..\User\LVGL\lvgl -I ..\User\KEY -I ..\User\LVGL\lvgl_app -I ..\User -I ..\User\MOTOR -I ..\User\FLASH-I.\RTE\_ADC_F4_TEST-IC:\Users\X\AppData\Local\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IC:\Users\X\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.16.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F411xE -DUSE_HAL_DRIVER -DSTM32F411xE-o adc_f4_test\pagecontrol.o --omf_browse adc_f4_test\pagecontrol.crf --depend adc_f4_test\pagecontrol.d)
 I (..\User\LVGL\lvgl\lvgl.h)(0x62626DBE)
 I (..\User\LVGL\lvgl\src/lv_misc/lv_log.h)(0x62626DBE)
 I (..\User\LVGL\lvgl\src/lv_misc/../lv_conf_internal.h)(0x62626DBE)
@@ -7817,7 +7817,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x61ECD550)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x61ECD550)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x61ECD550)
 I (..\User\config.h)(0x62748F4A)
-I (..\User\LVGL\lvgl_app\page.h)(0x6274B613)
+I (..\User\LVGL\lvgl_app\page.h)(0x62764789)
 I (..\User\MOTOR\motor.h)(0x6274879A)
 I (..\User\ROCKER\rocker.h)(0x6274879A)
 I (..\User\LCD\lcd.h)(0x62626DBD)
@@ -8191,8 +8191,8 @@ I (..\User\LVGL\lvgl/src/lv_widgets/lv_spinbox.h)(0x62626DBE)
 I (..\User\LVGL\lvgl/src/lv_draw/lv_img_cache.h)(0x62626DBE)
 I (..\User\LVGL\lvgl/src/lv_api_map.h)(0x62626DBE)
 I (..\User\LVGL\lvgl/src/../lvgl.h)(0x62626DBE)
-F (..\User\LVGL\lvgl_app\Page.c)(0x62762F87)(--c99 -c --cpu Cortex-M4.fp -g -O0 -Otime --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\User\LCD -I ..\User\ROCKER -I ..\User\LVGL -I ..\User\LVGL\lvgl_driver -I ..\User\LVGL\lvgl -I ..\User\KEY -I ..\User\LVGL\lvgl_app -I ..\User -I ..\User\MOTOR -I ..\User\FLASH-I.\RTE\_ADC_F4_TEST-IC:\Users\X\AppData\Local\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IC:\Users\X\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.16.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F411xE -DUSE_HAL_DRIVER -DSTM32F411xE-o adc_f4_test\page.o --omf_browse adc_f4_test\page.crf --depend adc_f4_test\page.d)
-I (..\User\LVGL\lvgl_app\page.h)(0x6274B613)
+F (..\User\LVGL\lvgl_app\Page.c)(0x62764763)(--c99 -c --cpu Cortex-M4.fp -g -O0 -Otime --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\User\LCD -I ..\User\ROCKER -I ..\User\LVGL -I ..\User\LVGL\lvgl_driver -I ..\User\LVGL\lvgl -I ..\User\KEY -I ..\User\LVGL\lvgl_app -I ..\User -I ..\User\MOTOR -I ..\User\FLASH-I.\RTE\_ADC_F4_TEST-IC:\Users\X\AppData\Local\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IC:\Users\X\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.16.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F411xE -DUSE_HAL_DRIVER -DSTM32F411xE-o adc_f4_test\page.o --omf_browse adc_f4_test\page.crf --depend adc_f4_test\page.d)
+I (..\User\LVGL\lvgl_app\page.h)(0x62764789)
 I (..\User\LVGL\lvgl\lvgl.h)(0x62626DBE)
 I (..\User\LVGL\lvgl\src/lv_misc/lv_log.h)(0x62626DBE)
 I (..\User\LVGL\lvgl\src/lv_misc/../lv_conf_internal.h)(0x62626DBE)
@@ -8316,7 +8316,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x61ECD550)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x61ECD550)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x61ECD550)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x61ECD550)
-F (..\User\LVGL\lvgl_app\pageRemember.c)(0x6276329E)(--c99 -c --cpu Cortex-M4.fp -g -O0 -Otime --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\User\LCD -I ..\User\ROCKER -I ..\User\LVGL -I ..\User\LVGL\lvgl_driver -I ..\User\LVGL\lvgl -I ..\User\KEY -I ..\User\LVGL\lvgl_app -I ..\User -I ..\User\MOTOR -I ..\User\FLASH-I.\RTE\_ADC_F4_TEST-IC:\Users\X\AppData\Local\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IC:\Users\X\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.16.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F411xE -DUSE_HAL_DRIVER -DSTM32F411xE-o adc_f4_test\pageremember.o --omf_browse adc_f4_test\pageremember.crf --depend adc_f4_test\pageremember.d)
+F (..\User\LVGL\lvgl_app\pageRemember.c)(0x627647F2)(--c99 -c --cpu Cortex-M4.fp -g -O0 -Otime --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\User\LCD -I ..\User\ROCKER -I ..\User\LVGL -I ..\User\LVGL\lvgl_driver -I ..\User\LVGL\lvgl -I ..\User\KEY -I ..\User\LVGL\lvgl_app -I ..\User -I ..\User\MOTOR -I ..\User\FLASH-I.\RTE\_ADC_F4_TEST-IC:\Users\X\AppData\Local\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IC:\Users\X\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.16.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F411xE -DUSE_HAL_DRIVER -DSTM32F411xE-o adc_f4_test\pageremember.o --omf_browse adc_f4_test\pageremember.crf --depend adc_f4_test\pageremember.d)
 I (..\User\LVGL\lvgl\lvgl.h)(0x62626DBE)
 I (..\User\LVGL\lvgl\src/lv_misc/lv_log.h)(0x62626DBE)
 I (..\User\LVGL\lvgl\src/lv_misc/../lv_conf_internal.h)(0x62626DBE)
@@ -8441,7 +8441,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x61ECD550)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x61ECD550)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x61ECD550)
 I (..\User\config.h)(0x62748F4A)
-I (..\User\LVGL\lvgl_app\page.h)(0x6274B613)
+I (..\User\LVGL\lvgl_app\page.h)(0x62764789)
 F (..\User\LVGL\lvgl_app\pageAbout.c)(0x6274879A)(--c99 -c --cpu Cortex-M4.fp -g -O0 -Otime --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\User\LCD -I ..\User\ROCKER -I ..\User\LVGL -I ..\User\LVGL\lvgl_driver -I ..\User\LVGL\lvgl -I ..\User\KEY -I ..\User\LVGL\lvgl_app -I ..\User -I ..\User\MOTOR -I ..\User\FLASH-I.\RTE\_ADC_F4_TEST-IC:\Users\X\AppData\Local\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IC:\Users\X\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.16.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F411xE -DUSE_HAL_DRIVER -DSTM32F411xE-o adc_f4_test\pageabout.o --omf_browse adc_f4_test\pageabout.crf --depend adc_f4_test\pageabout.d)
 I (..\User\LVGL\lvgl\lvgl.h)(0x62626DBE)
 I (..\User\LVGL\lvgl\src/lv_misc/lv_log.h)(0x62626DBE)
@@ -8567,7 +8567,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x61ECD550)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x61ECD550)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x61ECD550)
 I (..\User\config.h)(0x62748F4A)
-I (..\User\LVGL\lvgl_app\page.h)(0x6274B613)
+I (..\User\LVGL\lvgl_app\page.h)(0x62764789)
 F (..\User\LVGL\lvgl_app\pageRoll.c)(0x62752D1F)(--c99 -c --cpu Cortex-M4.fp -g -O0 -Otime --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\User\LCD -I ..\User\ROCKER -I ..\User\LVGL -I ..\User\LVGL\lvgl_driver -I ..\User\LVGL\lvgl -I ..\User\KEY -I ..\User\LVGL\lvgl_app -I ..\User -I ..\User\MOTOR -I ..\User\FLASH-I.\RTE\_ADC_F4_TEST-IC:\Users\X\AppData\Local\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IC:\Users\X\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.16.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F411xE -DUSE_HAL_DRIVER -DSTM32F411xE-o adc_f4_test\pageroll.o --omf_browse adc_f4_test\pageroll.crf --depend adc_f4_test\pageroll.d)
 I (..\User\LVGL\lvgl\lvgl.h)(0x62626DBE)
 I (..\User\LVGL\lvgl\src/lv_misc/lv_log.h)(0x62626DBE)
@@ -8693,4 +8693,4 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x61ECD550)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x61ECD550)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x61ECD550)
 I (..\User\config.h)(0x62748F4A)
-I (..\User\LVGL\lvgl_app\page.h)(0x6274B613)
+I (..\User\LVGL\lvgl_app\page.h)(0x62764789)

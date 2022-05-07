@@ -25,7 +25,7 @@ static void eraseFlash(void) {
     My_Flash.TypeErase = FLASH_TYPEERASE_SECTORS;
     My_Flash.Sector = FLASH_SECTOR_7;
     // My_Flash.PageAddress = Flash_Add;  //声明要擦除的地址
-    My_Flash.NbSectors = 1;                        //说明要擦除的页数，此参数必须是Min_Data = 1和Max_Data =(最大页数-初始页的值)之间的值
+    My_Flash.NbSectors = 7;                        //说明要擦除的页数，此参数必须是Min_Data = 1和Max_Data =(最大页数-初始页的值)之间的值
 
     uint32_t PageError = 0;                    //设置PageError,如果出现错误这个变量会被设置为出错的FLASH地址
     HAL_FLASHEx_Erase(&My_Flash, &PageError);  //调用擦除函数擦除

@@ -28,10 +28,9 @@ typedef enum {
     /*用户页面*/
     PAGE_CONTROL,
     PAGE_REMEMBER,
-    PAGE_ROLL,
+	PAGE_ROLL,
     PAGE_ABOUT,
     /*保留*/
-    PAGE_MAX
 } Page_Type;
 
 typedef struct {
