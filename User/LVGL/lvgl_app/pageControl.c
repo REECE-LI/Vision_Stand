@@ -10,6 +10,7 @@
 #include "page.h"
  //#include "usart.h"
 #include "motor.h"
+#include "flash.h"
 
 static void savePos(void);
 static void event_callback(lv_obj_t* obj, lv_event_t event);
@@ -32,10 +33,10 @@ extern bool flagZ;
 extern Site screenSite;
 
 
-extern loacateRem btnRem1;
-extern loacateRem btnRem2;
-extern loacateRem btnRem3;
-extern loacateRem btnRem4;
+extern u16 btnRem1[2];
+extern u16 btnRem2[2];
+extern u16 btnRem3[2];
+extern u16 btnRem4[2];
 /**
  * @Name: pageControl
  * @Description: 这个函数只会进入一次 之后的app页面处理函数另外写
@@ -153,7 +154,7 @@ void appControl(void) {
 
     lv_group_set_editing(appGroup, true);
 }
-
+extern u8 ID;
 static void event_callback(lv_obj_t* obj, lv_event_t event) {
 
     if (event == LV_EVENT_KEY) {
@@ -289,12 +290,13 @@ static void event_callback(lv_obj_t* obj, lv_event_t event) {
             }
             else if (obj == btnPos1) {
                 // 进行地址保存 写入flash
-                btnRem1.x = xCount;
-                btnRem1.z = zCount;
-
+                btnRem1[0] = xCount;
+                btnRem1[1] = zCount;
+                wirteHWFlash((u16*)btnRem1, 2);
 
                 // 回到控制菜单页面
-                pageSwitch(5, 1);
+                ID = 1;
+                pageSwitch(4, 1);
             }
 
             break;

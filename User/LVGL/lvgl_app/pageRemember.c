@@ -17,11 +17,15 @@ static lv_obj_t* btnPos1;
 static lv_obj_t* btnPos2;
 static lv_obj_t* btnPos3;
 static lv_obj_t* btnPos4;
+u16 btnRem1[2];
+u16 btnRem2[2];
+u16 btnRem3[2];
+u16 btnRem4[2];
 
-loacateRem btnRem1;
-loacateRem btnRem2;
-loacateRem btnRem3;
-loacateRem btnRem4;
+
+extern u16 zCount;
+extern u16 xCount;
+
 
 /**
  * @Name: pageControl
@@ -94,6 +98,9 @@ void appRemember(void) {
     lv_group_set_editing(appGroup, true);
 }
 
+extern u8 camX;
+extern u8 camY;
+
 static void event_callback(lv_obj_t* obj, lv_event_t event) {
     if (event == LV_EVENT_KEY) {
         //HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
@@ -113,8 +120,19 @@ static void event_callback(lv_obj_t* obj, lv_event_t event) {
             lv_group_focus_next(appGroup);
             break;
         case LV_KEY_FUC:
-            if (obj == btnPos1 || obj == btnPos2 || obj == btnPos3 || obj == btnPos4) {
-                appControl();
+            if (obj == btnPos1) {
+                if (1) {
+                    readHWFlash((u16*)btnRem1, 2);
+                    camX = btnRem1[0];
+                    camY = btnRem1[1];
+                    xCount = camX * 5.4;
+                    zCount = camY * 23;
+                    appControl();
+                }
+                // else if (ID == 1) {
+                    
+                // }
+                
             }
             break;
 

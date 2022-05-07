@@ -169,12 +169,13 @@ void pageTitleAnimInit(void)
 
 extern u8 idX;
 extern u8 idY;
-static void event_callback(lv_obj_t *obj, lv_event_t event)
+u8 ID = 1;
+static void event_callback(lv_obj_t* obj, lv_event_t event)
 {
     if (event == LV_EVENT_KEY)
     {
         // HAL_UART_Transmit(&huart1, (u8 *)ADC_Value, 2, 10);
-        static u8 ID = 1;
+        
         const u32 *key = lv_event_get_data();
         switch (*key)
         {

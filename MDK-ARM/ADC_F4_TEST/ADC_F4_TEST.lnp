@@ -33,6 +33,7 @@
 "adc_f4_test\rocker.o"
 "adc_f4_test\key.o"
 "adc_f4_test\motor.o"
+"adc_f4_test\flash.o"
 "adc_f4_test\lv_disp.o"
 "adc_f4_test\lv_group.o"
 "adc_f4_test\lv_indev.o"

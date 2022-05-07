@@ -7,5 +7,6 @@
        "Description":"",
         "Author":"李明骏",
         "Date":"Do not edit",
-    }
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
